@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What's Your Chronically Online Coping Archetype? — Reframed</title>
+  <meta name="description" content="A loving, brutally honest personality quiz. 12 unhinged scenarios reveal your chronically online coping archetype. Shareable result included." />
+  <meta property="og:title" content="What's Your Chronically Online Coping Archetype?" />
+  <meta property="og:description" content="A loving psychological callout in quiz form. Find your coping archetype in 3 minutes — then send it to the friend it's actually about." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .quiz-wrap {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .quiz-hero {
+      position: relative;
+      padding: 60px 0 40px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .quiz-hero h1 {
+      font-family: var(--font-title);
+      font-weight: 600;
+      font-size: clamp(26px, 5vw, 44px);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      margin-bottom: 12px;
+    }
+
+    .quiz-hero p {
+      font-size: 16px;
+      color: var(--ink60);
+      max-width: 460px;
+      margin: 0 auto;
+    }
+
+    .quiz-progress {
+      height: 3px;
+      background: var(--ink10);
+      position: relative;
+      margin-bottom: 48px;
+    }
+
+    .quiz-progress-fill {
+      height: 100%;
+      background: var(--indigo);
+      transition: width 0.4s ease;
+    }
+
+    .quiz-card {
+      max-width: 560px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 0 24px 80px;
+    }
+
+    .quiz-question-num {
+      font-family: var(--font-title);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink40);
+      margin-bottom: 12px;
+    }
+
+    .quiz-question {
+      font-family: var(--font-title);
+      font-size: clamp(20px, 3.5vw, 26px);
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--ink);
+      margin-bottom: 32px;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .quiz-option {
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      padding: 16px 20px;
+      font-family: var(--font-sans);
+      font-size: 15px;
+      color: var(--ink-soft);
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, transform 0.1s;
+      text-align: left;
+      line-height: 1.5;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .quiz-option .opt-letter {
+      font-family: var(--font-title);
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--ink40);
+      flex-shrink: 0;
+      line-height: 1.6;
+    }
+
+    .quiz-option:hover {
+      border-color: var(--indigo);
+      background: rgba(46,59,122,0.04);
+      transform: translateY(-1px);
+    }
+
+    .quiz-option:active { transform: translateY(0); }
+
+    /* ─── Result ─────────────────────────────────────────────── */
+    .result-wrap {
+      max-width: 600px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 0 24px 80px;
+    }
+
+    .result-eyebrow {
+      font-family: var(--font-title);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--vermillion);
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .result-primary {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .result-emoji {
+      font-size: 44px;
+      line-height: 1;
+      margin-bottom: 14px;
+    }
+
+    .result-archetype {
+      font-family: var(--font-title);
+      font-weight: 600;
+      font-size: clamp(24px, 4.5vw, 36px);
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+
+    .result-subtitle {
+      font-size: 16px;
+      color: var(--ink60);
+      font-style: italic;
+      line-height: 1.55;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    /* Percentage bars */
+    .result-bars { margin-bottom: 36px; }
+
+    .result-bars h3 {
+      font-family: var(--font-title);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink40);
+      margin-bottom: 16px;
+    }
+
+    .bar-row { margin-bottom: 14px; }
+
+    .bar-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+
+    .bar-name {
+      font-family: var(--font-title);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .bar-pct {
+      font-family: var(--font-title);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink60);
+    }
+
+    .bar-track {
+      height: 6px;
+      background: var(--ink06);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      width: 0%;
+      transition: width 1s ease;
+    }
+
+    .bar-fill.vermillion { background: var(--vermillion); }
+    .bar-fill.indigo { background: var(--indigo); }
+    .bar-fill.ochre { background: var(--ochre); }
+    .bar-fill.ink { background: var(--ink-soft); }
+
+    .bar-row.primary .bar-name { font-weight: 600; }
+    .bar-row.primary .bar-pct { color: var(--vermillion); font-weight: 600; }
+
+    /* Result detail fields */
+    .result-fields { margin-bottom: 36px; }
+
+    .result-field {
+      padding: 18px 0;
+      border-top: 1px solid var(--rule);
+    }
+
+    .result-field-label {
+      font-family: var(--font-title);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--vermillion);
+      margin-bottom: 8px;
+    }
+
+    .result-field-body {
+      font-size: 16px;
+      color: var(--ink-soft);
+      line-height: 1.65;
+    }
+
+    .result-field.help .result-field-label { color: var(--indigo); }
+
+    /* Shareable phrase */
+    .share-phrase-box {
+      background: var(--paper2);
+      border: 1.5px dashed var(--vermillion);
+      border-radius: 12px;
+      padding: 24px 24px;
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .share-phrase-box .share-kicker {
+      font-family: var(--font-title);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink40);
+      margin-bottom: 12px;
+    }
+
+    .share-phrase {
+      font-family: var(--font-title);
+      font-size: clamp(18px, 3.6vw, 22px);
+      font-weight: 600;
+      line-height: 1.4;
+      color: var(--ink);
+    }
+
+    .result-divider {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 36px 0;
+    }
+
+    .result-cta-box {
+      background: var(--paper2);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      text-align: center;
+    }
+
+    .result-cta-box h3 {
+      font-family: var(--font-title);
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .result-cta-box p {
+      font-size: 14px;
+      color: var(--ink60);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .result-share {
+      margin: 24px 0 0;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .result-share button {
+      padding: 12px 22px;
+      font-family: var(--font-title);
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid var(--rule);
+      border-radius: 40px;
+      background: var(--paper);
+      color: var(--ink-soft);
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .result-share button.primary {
+      background: var(--indigo);
+      border-color: var(--indigo);
+      color: #fff;
+    }
+
+    .result-share button:hover { border-color: var(--ink40); }
+    .result-share button.primary:hover { border-color: var(--indigo); opacity: 0.92; }
+
+    .share-toast {
+      text-align: center;
+      font-size: 13px;
+      color: var(--vermillion);
+      margin-top: 14px;
+      height: 16px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .share-toast.show { opacity: 1; }
+
+    .hidden { display: none !important; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.5s ease forwards; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo" style="text-decoration:none;">Reframed</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#features">Features</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="quiz-wrap">
+
+  <div class="quiz-hero">
+    <div class="hero-gradient"></div>
+    <div class="container" style="position:relative;">
+      <span class="hero-eyebrow">a loving callout · 3 minutes</span>
+      <h1 id="quiz-title">what's your chronically<br>online coping archetype?</h1>
+      <p id="quiz-subtitle">12 unhinged but accurate scenarios, decided by your brutally honest best friend. you will feel seen. you will feel attacked. you will send it to the group chat.</p>
+    </div>
+  </div>
+
+  <div class="quiz-progress" id="quiz-progress">
+    <div class="quiz-progress-fill" id="quiz-progress-fill" style="width: 0%"></div>
+  </div>
+
+  <div class="quiz-card" id="quiz-card">
+    <div id="quiz-question-num" class="quiz-question-num"></div>
+    <div id="quiz-question" class="quiz-question"></div>
+    <div id="quiz-options" class="quiz-options"></div>
+  </div>
+
+  <div class="result-wrap hidden" id="result-wrap">
+    <div class="fade-up">
+      <p class="result-eyebrow">YOUR COPING ARCHETYPE</p>
+
+      <div class="result-primary">
+        <div class="result-emoji" id="result-emoji"></div>
+        <h2 class="result-archetype" id="result-archetype"></h2>
+        <p class="result-subtitle" id="result-subtitle"></p>
+      </div>
+
+      <div class="result-bars" id="result-bars">
+        <h3>how your coping actually breaks down</h3>
+      </div>
+
+      <div class="result-fields">
+        <div class="result-field">
+          <div class="result-field-label">your special talent</div>
+          <div class="result-field-body" id="field-talent"></div>
+        </div>
+        <div class="result-field">
+          <div class="result-field-label">the brutal truth</div>
+          <div class="result-field-body" id="field-truth"></div>
+        </div>
+        <div class="result-field">
+          <div class="result-field-label">your current coping mechanism</div>
+          <div class="result-field-body" id="field-coping"></div>
+        </div>
+        <div class="result-field help">
+          <div class="result-field-label">what would actually help</div>
+          <div class="result-field-body" id="field-help"></div>
+        </div>
+      </div>
+
+      <div class="share-phrase-box">
+        <div class="share-kicker">caption this on your story</div>
+        <div class="share-phrase" id="share-phrase"></div>
+      </div>
+
+      <div class="result-share">
+        <button class="primary" onclick="shareResult()">Share my result</button>
+        <button onclick="copyResult()">Copy text</button>
+        <button onclick="retakeQuiz()">Retake</button>
+      </div>
+      <div class="share-toast" id="share-toast"></div>
+
+      <hr class="result-divider" />
+
+      <div class="result-cta-box">
+        <h3>self-aware is step one. reframed is the rest.</h3>
+        <p>You can name the pattern — now do something with it. Reframed turns your coping loops into CBT-backed reflections, personalised to how your brain actually works.</p>
+        <a class="appstore-badge" href="https://apps.apple.com/us/app/reframed-rewire-your-thoughts/id6768231681" target="_blank" rel="noopener" style="margin-top:4px;" aria-label="Download on the App Store">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 22 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.1 22C7.78 22.05 6.8 20.68 5.96 19.47C4.25 17 2.94 12.45 4.7 9.39C5.57 7.87 7.13 6.91 8.82 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z" fill="currentColor"/>
+          </svg>
+          Download Reframed
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <span class="footer-logo">Reframed</span>
+      <ul class="footer-links">
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="support.html">Support</a></li>
+        <li><a href="mailto:hexp.studios@gmail.com">Contact</a></li>
+      </ul>
+    </div>
+    <p class="footer-copy">&copy; 2025 Hexp Studios. All rights reserved. This quiz is for fun and self-reflection — not a diagnosis.</p>
+  </div>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// Questions — each option carries weighted points toward archetypes.
+// Scenarios reveal the trait sideways; nothing asks "do you overthink?"
+// ═══════════════════════════════════════════════════════════════
+const QUESTIONS = [
+  {
+    text: "someone replies “okay” instead of “okayyy.” what happens next?",
+    options: [
+      { t: "nothing. i’m emotionally regulated against my will", w: { productivity: 3, avoid: 1 } },
+      { t: "i reread the entire conversation to locate the exact moment it ended", w: { analyze: 3 } },
+      { t: "i decide, very calmly, that i never liked them anyway", w: { avoid: 3, selfaware: 1 } },
+      { t: "i add three small things to my cart as an act of emotional recovery", w: { delulu: 3 } },
+    ],
+  },
+  {
+    text: "your friday night plans just got cancelled. your honest first reaction:",
+    options: [
+      { t: "thank GOD — i’ve been performing extroversion all week on 4% battery", w: { lowbattery: 3 } },
+      { t: "perfect, now i can finish my book and emotionally bond with a fictional duke", w: { book: 3 } },
+      { t: "time to send a 3-paragraph voice note to the group chat about how i’m Feeling", w: { overshare: 3 } },
+      { t: "i KNEW this would happen. i could narrate my own social decline in real time", w: { selfaware: 3, analyze: 1 } },
+    ],
+  },
+  {
+    text: "you’ve got one completely free saturday. the plan is:",
+    options: [
+      { t: "buy the £40 candle + matching set for the main-character morning routine i’ll definitely start", w: { delulu: 3 } },
+      { t: "mentally rehearse a conversation i need to have, in case it ever happens", w: { analyze: 3 } },
+      { t: "blackout curtains, one (1) book, zero (0) humans, total bliss", w: { book: 3, lowbattery: 1 } },
+      { t: "“reset my whole life,” which mostly means cleaning while ignoring the actual problem", w: { avoid: 3 } },
+    ],
+  },
+  {
+    text: "“no, but how are you, REALLY?” your move:",
+    options: [
+      { t: "deflect with my to-do list — i’m not avoiding feelings, i’m just genuinely very busy", w: { productivity: 3 } },
+      { t: "open the floodgates. they asked. legally i now have to tell them everything", w: { overshare: 3 } },
+      { t: "“good!” (i love them. i also need this to end so i can go lie down)", w: { lowbattery: 3 } },
+      { t: "deliver a flawless summary of my issues that i will absolutely not act on", w: { selfaware: 3 } },
+    ],
+  },
+  {
+    text: "you sent a text two hours ago. no reply. you:",
+    options: [
+      { t: "have already located the typo, the tone, and the precise word that ended us", w: { analyze: 3 } },
+      { t: "distract myself by planning the apology gift they’ll buy when they realise they were wrong", w: { delulu: 3 } },
+      { t: "put my phone in another room and call it a digital detox", w: { avoid: 3, productivity: 1 } },
+      { t: "honestly forgot — i was 200 pages deep and unavailable to reality", w: { book: 3 } },
+    ],
+  },
+  {
+    text: "it’s 1am. you should be asleep. instead you’re:",
+    options: [
+      { t: "posting a very vulnerable note to my close-friends story", w: { overshare: 3 } },
+      { t: "lying in the dark recovering from the exhausting act of having a personality today", w: { lowbattery: 3 } },
+      { t: "watching a productivity video so tomorrow i can finally become a different person", w: { productivity: 3, delulu: 1 } },
+      { t: "doomscrolling while fully aware that doomscrolling is making it worse", w: { selfaware: 3, analyze: 1 } },
+    ],
+  },
+  {
+    text: "a tiny, meaningless inconvenience happens. your brain immediately:",
+    options: [
+      { t: "convenes an emergency meeting to win an argument with someone who isn’t here", w: { analyze: 3 } },
+      { t: "decides this is a Sign and opens a cart for an entire new lifestyle", w: { delulu: 3 } },
+      { t: "retreats into a story where all the problems belong to fictional people", w: { book: 3, avoid: 1 } },
+      { t: "decides we are simply not dealing with this today, or possibly ever", w: { avoid: 3 } },
+    ],
+  },
+  {
+    text: "one small thing goes wrong at noon. by tonight you have:",
+    options: [
+      { t: "a complete diagnosis of why i’m Like This, and zero plan to change it", w: { selfaware: 3 } },
+      { t: "rearranged my whole calendar so the feeling has nowhere to live", w: { productivity: 3 } },
+      { t: "told four people, started a fresh journal, and looked up therapists", w: { overshare: 3 } },
+      { t: "cancelled the entire week to “recover” from a ten-minute event", w: { lowbattery: 3, avoid: 1 } },
+    ],
+  },
+  {
+    text: "your ideal recovery from a genuinely hard week is:",
+    options: [
+      { t: "tea, rain sounds, and a novel i can fully disappear into for nine hours", w: { book: 3 } },
+      { t: "an aesthetic haul that promises me a more put-together future self", w: { delulu: 3 } },
+      { t: "lying flat, replaying everything i could’ve done differently since roughly birth", w: { analyze: 3 } },
+      { t: "a “soft life reset” that is legally distinct from solving any actual problem", w: { avoid: 3 } },
+    ],
+  },
+  {
+    text: "your relationship with self-improvement content is, honestly:",
+    options: [
+      { t: "i’ve optimised everything except the part where i feel things", w: { productivity: 3 } },
+      { t: "i quote my therapist to strangers and i WILL bring up attachment styles", w: { overshare: 3 } },
+      { t: "i’ve watched enough to diagnose everyone — including me — and fix no one", w: { selfaware: 3, analyze: 1 } },
+      { t: "i save it for later, get overwhelmed, and need a little nap about it", w: { lowbattery: 3 } },
+    ],
+  },
+  {
+    text: "you’re stressed and the card is already in your hand. you:",
+    options: [
+      { t: "buy the thing future-me will use to become a completely different, better person", w: { delulu: 3 } },
+      { t: "don’t buy it, but research it for 90 minutes as a refined form of suffering", w: { analyze: 3 } },
+      { t: "close the app to “deal with it later” (later being a mythical, sacred place)", w: { avoid: 3 } },
+      { t: "buy four more books for the shelf i lovingly call my “someday” pile", w: { book: 3, delulu: 1 } },
+    ],
+  },
+  {
+    text: "someone you really like takes a while to text back. you:",
+    options: [
+      { t: "narrate, in real time, exactly which attachment wound this is poking", w: { selfaware: 3 } },
+      { t: "are honestly relieved — now i don’t have to reply at my current battery level", w: { lowbattery: 3 } },
+      { t: "give the group chat live commentary and a full emotional analysis", w: { overshare: 3 } },
+      { t: "bury it under tasks so i don’t have to notice that i care", w: { productivity: 3 } },
+    ],
+  },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// 8 archetypes
+// ═══════════════════════════════════════════════════════════════
+const ARCHETYPE_KEYS = ["delulu","selfaware","avoid","analyze","book","productivity","overshare","lowbattery"];
+
+const TRAIT_META = {
+  delulu:       { label: "Delulu Fantasy Shopper", color: "ochre" },
+  selfaware:    { label: "Painfully Self-Aware Queen", color: "vermillion" },
+  avoid:        { label: "Romanticizes Avoidance", color: "indigo" },
+  analyze:      { label: "Overanalysis Dept. Manager", color: "ink" },
+  book:         { label: "Introverted Book Queen", color: "indigo" },
+  productivity: { label: "Emotionally Unavailable Productivity Addict", color: "ink" },
+  overshare:    { label: "Healing-Era Oversharer", color: "vermillion" },
+  lowbattery:   { label: "Low-Battery Social Butterfly", color: "ochre" },
+};
+
+const ARCHETYPES = {
+  delulu: {
+    emoji: "🛒",
+    name: "Delulu Fantasy Shopper",
+    summary: "You don’t have problems — you have a cart full of solutions and a fictional version of your life that’s absolutely thriving.",
+    talent: "Manifesting an entire future self, relationship, and morning routine out of one ‘add to basket.’ The vision is immaculate. The shipping is two-day.",
+    truth: "You’re not buying the thing, you’re buying the feeling — and the fantasy is cheaper than sitting with whatever the present moment is asking of you.",
+    coping: "Retail therapy as a free meditation app: a small, beautiful purchase to recover from an emotion you haven’t named yet.",
+    help: "Before checkout, sit with the wanting for ten minutes. Ask what the fantasy is protecting you from — the answer is usually the thing actually worth tending to.",
+    share: "i’m not in my flop era, i’m in my pre-order era 🛒✨",
+  },
+  selfaware: {
+    emoji: "💅",
+    name: "Painfully Self-Aware Queen",
+    summary: "You can narrate your own downfall in real time, with perfect insight, footnotes, and absolutely zero ability to stop it.",
+    talent: "Diagnosing yourself faster and more accurately than any professional — annotated, sourced, and delivered as a devastatingly funny bit.",
+    truth: "Awareness isn’t the same as change. You’ve turned ‘knowing exactly what’s wrong’ into the most comfortable hiding place you own.",
+    coping: "Making every flaw into a joke before anyone else can, so it can’t actually reach you.",
+    help: "Do one boring, un-clever, unposted thing this week instead of explaining, beautifully, why you won’t. Insight is the warm-up, not the workout.",
+    share: "i’m not avoiding growth, i’m just extremely well-informed about it 💅",
+  },
+  avoid: {
+    emoji: "🕯️",
+    name: "Romanticizes Avoidance",
+    summary: "You’ve rebranded ignoring your problems as ‘protecting your peace,’ and honestly the marketing is immaculate.",
+    talent: "Making avoidance look like a wellness routine — soft lighting, slow mornings, a ‘reset’ that resets everything except the actual issue.",
+    truth: "Self-care has quietly become your most elaborate avoidance strategy. The candle is lovely. The unopened email is still there.",
+    coping: "‘I’ll deal with it later,’ where later is a beautiful, mythical place you are spiritually committed to never visiting.",
+    help: "Name the one thing you’re avoiding, out loud, then do the smallest possible version of it today. Two minutes counts. Peace you have to maintain by hiding isn’t peace yet.",
+    share: "romanticizing my life so hard i don’t have to fix it 🕯️",
+  },
+  analyze: {
+    emoji: "🧠",
+    name: "Overanalysis Department Manager",
+    summary: "You run a full-time internal investigation into events that lasted four seconds and harmed precisely no one.",
+    talent: "Reconstructing any interaction frame-by-frame like a referee reviewing a foul — catching tones, pauses, and subtext no one else even sent.",
+    truth: "You call it ‘being prepared,’ but you’re mostly just paying for future suffering in advance, in full, with interest.",
+    coping: "Winning imaginary arguments at 1am against people who are asleep and have no idea the trial is ongoing.",
+    help: "Give the spiral a container: a 15-minute ‘worry window,’ then let the rest go un-rendered. Your brain is brilliant — point it at what’s in front of you, not at someone’s eyebrow from Tuesday.",
+    share: "currently in a meeting with myself about something that didn’t even happen 🧠📊",
+  },
+  book: {
+    emoji: "📚",
+    name: "Introverted Book Queen",
+    summary: "You’d cancel plans for a fictional character and you have genuinely never been more sure of anything in your life.",
+    talent: "Feeling enormous, profound emotions — safely, at a distance, on the page, where nothing can require anything back from you.",
+    truth: "Fiction is where you let yourself feel the things you quietly won’t risk feeling out loud with real people.",
+    coping: "A 600-page book, a ‘do not perceive me’ candle, and a heart that’s wide open as long as it’s for someone who isn’t real.",
+    help: "Let one actual human in as far as you let your favourite narrator. Start small — the story you’re part of can be just as good as the ones you finish.",
+    share: "social battery: 2%. book battery: infinite 📚",
+  },
+  productivity: {
+    emoji: "✅",
+    name: "Emotionally Unavailable Productivity Addict",
+    summary: "You will optimise literally anything to avoid feeling one (1) feeling, and your calendar is, frankly, gorgeous.",
+    talent: "Being impressively, suspiciously functional while quietly unwell — output flawless, inbox at zero, interior life unread.",
+    truth: "Your to-do list is a beautifully organised way of never checking in with yourself. ‘Busy’ has become your anaesthetic.",
+    coping: "Burying every inconvenient emotion under tasks so well that you genuinely don’t notice it’s there until it’s very, very loud.",
+    help: "Schedule feeling something the way you’d schedule a meeting — non-negotiable, in the calendar, with you. Rest isn’t the reward for productivity; it’s the thing keeping you alive enough to do it.",
+    share: "emotionally unavailable but my calendar is colour-coded ✅",
+  },
+  overshare: {
+    emoji: "🌱",
+    name: "Healing-Era Oversharer",
+    summary: "You’ve turned your trauma into content and your group chat into an ongoing, heavily attended TED talk.",
+    talent: "Vulnerability at scale — naming feelings out loud, in detail, sometimes before the wifi has even fully connected.",
+    truth: "Talking about healing can quietly become a substitute for actually doing it. The processing is real; so is using it to skip the quiet part.",
+    coping: "Live-narrating your inner world to anyone with a pulse and a phone, because saying it feels almost like solving it.",
+    help: "Keep one feeling fully private long enough to actually feel it, before it becomes a story for the timeline. Some healing happens in the room with no audience.",
+    share: "in my healing era (and i will be telling absolutely everyone) 🌱",
+  },
+  lowbattery: {
+    emoji: "🦋",
+    name: "Low-Battery Social Butterfly",
+    summary: "You love everyone deeply and you also need every single one of them to leave immediately.",
+    talent: "Being the warmest, most present person in the room — and then evaporating the second the door closes, fully spent.",
+    truth: "You give until you’re empty, then disappear and call it ‘recharging.’ The left-on-read isn’t coldness; it’s a battery at zero.",
+    coping: "An enthusiastic, genuine ‘YES!’ followed by a quiet collapse and three days of horizontal recovery.",
+    help: "Protect the battery before it hits 0%, not after. Leave the party while you still like everyone — boundaries up front mean you don’t have to vanish to survive.",
+    share: "i had SO much fun, please never invite me anywhere again 🦋🔋",
+  },
+};
+
+// ═══════════════════════════════════════════════════════════════
+// Engine
+// ═══════════════════════════════════════════════════════════════
+let currentQ = 0;
+const totals = {};
+const maxes = {};
+
+// Pre-compute the max points each archetype can earn (for % breakdown).
+QUESTIONS.forEach((q) => {
+  ARCHETYPE_KEYS.forEach((key) => {
+    let best = 0;
+    q.options.forEach((o) => { if (o.w[key]) best = Math.max(best, o.w[key]); });
+    maxes[key] = (maxes[key] || 0) + best;
+  });
+});
+
+function renderQuestion() {
+  const q = QUESTIONS[currentQ];
+  const total = QUESTIONS.length;
+
+  document.getElementById("quiz-progress-fill").style.width = `${(currentQ / total) * 100}%`;
+  document.getElementById("quiz-question-num").textContent = `QUESTION ${currentQ + 1} OF ${total}`;
+  document.getElementById("quiz-question").textContent = q.text;
+
+  const optionsEl = document.getElementById("quiz-options");
+  optionsEl.innerHTML = "";
+  const letters = ["A", "B", "C", "D"];
+
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement("button");
+    btn.className = "quiz-option";
+    btn.innerHTML = `<span class="opt-letter">${letters[i]}</span><span>${opt.t}</span>`;
+    btn.onclick = () => selectOption(opt.w);
+    optionsEl.appendChild(btn);
+  });
+
+  const card = document.getElementById("quiz-card");
+  card.style.opacity = "0";
+  card.style.transform = "translateY(12px)";
+  requestAnimationFrame(() => {
+    card.style.transition = "opacity 0.35s ease, transform 0.35s ease";
+    card.style.opacity = "1";
+    card.style.transform = "translateY(0)";
+  });
+}
+
+function selectOption(weights) {
+  for (const [key, val] of Object.entries(weights)) {
+    totals[key] = (totals[key] || 0) + val;
+  }
+  currentQ++;
+  if (currentQ >= QUESTIONS.length) {
+    showResult();
+  } else {
+    renderQuestion();
+  }
+}
+
+function getPercentages() {
+  const pcts = {};
+  for (const key of ARCHETYPE_KEYS) {
+    const total = totals[key] || 0;
+    const max = maxes[key] || 1;
+    pcts[key] = Math.round((total / max) * 100);
+  }
+  return pcts;
+}
+
+function getSorted() {
+  // Highest score wins; ties broken by raw points then key order for determinism.
+  return [...ARCHETYPE_KEYS].sort((a, b) => {
+    const pa = getPercentages()[a], pb = getPercentages()[b];
+    if (pb !== pa) return pb - pa;
+    return (totals[b] || 0) - (totals[a] || 0);
+  });
+}
+
+function showResult() {
+  document.getElementById("quiz-card").classList.add("hidden");
+  document.getElementById("quiz-progress").classList.add("hidden");
+
+  document.getElementById("quiz-title").textContent = "the verdict is in.";
+  document.getElementById("quiz-subtitle").textContent = "your best friend has reviewed the evidence. here’s the read.";
+
+  const pcts = getPercentages();
+  const sorted = getSorted();
+  const topKey = sorted[0];
+  const arch = ARCHETYPES[topKey];
+
+  document.getElementById("result-emoji").textContent = arch.emoji;
+  document.getElementById("result-archetype").textContent = arch.name;
+  document.getElementById("result-subtitle").textContent = arch.summary;
+
+  document.getElementById("field-talent").textContent = arch.talent;
+  document.getElementById("field-truth").textContent = arch.truth;
+  document.getElementById("field-coping").textContent = arch.coping;
+  document.getElementById("field-help").textContent = arch.help;
+  document.getElementById("share-phrase").textContent = `“${arch.share}”`;
+
+  // Top-5 breakdown bars
+  const barsEl = document.getElementById("result-bars");
+  barsEl.innerHTML = "<h3>how your coping actually breaks down</h3>";
+  sorted.slice(0, 5).forEach((key, i) => {
+    const meta = TRAIT_META[key];
+    const pct = pcts[key];
+    const row = document.createElement("div");
+    row.className = "bar-row" + (i === 0 ? " primary" : "");
+    row.innerHTML = `
+      <div class="bar-label-row">
+        <span class="bar-name">${meta.label}</span>
+        <span class="bar-pct">${pct}%</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill ${meta.color}"></div>
+      </div>`;
+    barsEl.appendChild(row);
+    requestAnimationFrame(() => {
+      setTimeout(() => { row.querySelector(".bar-fill").style.width = pct + "%"; }, 120 + i * 110);
+    });
+  });
+
+  document.getElementById("result-wrap").classList.remove("hidden");
+  document.getElementById("quiz-progress-fill").style.width = "100%";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function shareText() {
+  const sorted = getSorted();
+  const arch = ARCHETYPES[sorted[0]];
+  return `my chronically online coping archetype is “${arch.name}.”\n\n${arch.share}\n\nfind yours:`;
+}
+
+function toast(msg) {
+  const el = document.getElementById("share-toast");
+  el.textContent = msg;
+  el.classList.add("show");
+  setTimeout(() => el.classList.remove("show"), 2200);
+}
+
+function shareResult() {
+  const text = shareText();
+  const url = window.location.href;
+  if (navigator.share) {
+    navigator.share({ title: "My Coping Archetype", text, url }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(`${text} ${url}`).then(() => toast("Copied — paste it anywhere ✨"));
+  }
+}
+
+function copyResult() {
+  const url = window.location.href;
+  navigator.clipboard.writeText(`${shareText()} ${url}`).then(() => toast("Copied to clipboard ✨"));
+}
+
+function retakeQuiz() {
+  currentQ = 0;
+  Object.keys(totals).forEach((k) => delete totals[k]);
+  document.getElementById("quiz-card").classList.remove("hidden");
+  document.getElementById("quiz-progress").classList.remove("hidden");
+  document.getElementById("result-wrap").classList.add("hidden");
+  document.getElementById("quiz-title").innerHTML = "what's your chronically<br>online coping archetype?";
+  document.getElementById("quiz-subtitle").textContent = "12 unhinged but accurate scenarios, decided by your brutally honest best friend. you will feel seen. you will feel attacked. you will send it to the group chat.";
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+renderQuestion();
+</script>
+
+</body>
+</html>
