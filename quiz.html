@@ -9,6 +9,7 @@
   <meta property="og:description" content="A loving psychological callout in quiz form. Find your coping archetype in 3 minutes — then send it to the friend it's actually about." />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#131210" />
   <link rel="stylesheet" href="style.css" />
   <style>
     .quiz-wrap {
@@ -25,11 +26,12 @@
     }
 
     .quiz-hero h1 {
-      font-family: var(--font-title);
-      font-weight: 600;
-      font-size: clamp(26px, 5vw, 44px);
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: clamp(28px, 5vw, 46px);
       line-height: 1.1;
-      letter-spacing: -0.01em;
+      letter-spacing: 0;
+      color: var(--ink);
       margin-bottom: 12px;
     }
 
@@ -71,9 +73,9 @@
     }
 
     .quiz-question {
-      font-family: var(--font-title);
-      font-size: clamp(20px, 3.5vw, 26px);
-      font-weight: 600;
+      font-family: var(--font-serif);
+      font-size: clamp(21px, 3.5vw, 27px);
+      font-weight: 400;
       line-height: 1.3;
       color: var(--ink);
       margin-bottom: 32px;
@@ -86,9 +88,9 @@
     }
 
     .quiz-option {
-      background: var(--paper);
-      border: 1px solid var(--rule);
-      border-radius: 10px;
+      background: var(--paper2);
+      border: 1px solid var(--ink10);
+      border-radius: 12px;
       padding: 16px 20px;
       font-family: var(--font-sans);
       font-size: 15px;
@@ -103,8 +105,8 @@
     }
 
     .quiz-option .opt-letter {
-      font-family: var(--font-title);
-      font-weight: 600;
+      font-family: var(--font-mono);
+      font-weight: 700;
       font-size: 13px;
       color: var(--ink40);
       flex-shrink: 0;
@@ -113,7 +115,7 @@
 
     .quiz-option:hover {
       border-color: var(--indigo);
-      background: rgba(46,59,122,0.04);
+      background: rgba(123,143,212,0.08);
       transform: translateY(-1px);
     }
 
@@ -144,15 +146,29 @@
     }
 
     .result-emoji {
-      font-size: 44px;
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 20px;
       line-height: 1;
-      margin-bottom: 14px;
+      letter-spacing: 1px;
+      padding: 11px 14px;
+      background: var(--paper2);
+      border: 1px solid var(--ink10);
+      border-radius: 2px;
+      color: var(--vermillion);
+      margin-bottom: 16px;
     }
 
+    .result-emoji.ochre { color: var(--ochre); }
+    .result-emoji.vermillion { color: var(--vermillion); }
+    .result-emoji.indigo { color: var(--indigo); }
+    .result-emoji.ink { color: var(--ink); }
+
     .result-archetype {
-      font-family: var(--font-title);
-      font-weight: 600;
-      font-size: clamp(24px, 4.5vw, 36px);
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: clamp(26px, 4.5vw, 38px);
       line-height: 1.15;
       color: var(--ink);
       margin-bottom: 10px;
@@ -255,7 +271,7 @@
     .share-phrase-box {
       background: var(--paper2);
       border: 1.5px dashed var(--vermillion);
-      border-radius: 12px;
+      border-radius: 2px;
       padding: 24px 24px;
       text-align: center;
       margin-bottom: 28px;
@@ -272,9 +288,9 @@
     }
 
     .share-phrase {
-      font-family: var(--font-title);
-      font-size: clamp(18px, 3.6vw, 22px);
-      font-weight: 600;
+      font-family: var(--font-serif);
+      font-size: clamp(19px, 3.6vw, 23px);
+      font-weight: 400;
       line-height: 1.4;
       color: var(--ink);
     }
@@ -294,9 +310,10 @@
     }
 
     .result-cta-box h3 {
-      font-family: var(--font-title);
-      font-size: 20px;
-      font-weight: 600;
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--ink);
       margin-bottom: 8px;
     }
 
@@ -317,25 +334,28 @@
 
     .result-share button {
       padding: 12px 22px;
-      font-family: var(--font-title);
-      font-size: 13px;
-      font-weight: 500;
+      font-family: var(--font-label);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
       border: 1px solid var(--rule);
-      border-radius: 40px;
-      background: var(--paper);
-      color: var(--ink-soft);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--ink60);
       cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
+      transition: border-color 0.15s, background 0.15s, opacity 0.15s;
     }
 
     .result-share button.primary {
-      background: var(--indigo);
-      border-color: var(--indigo);
-      color: #fff;
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--paper);
+      border-radius: 3px;
     }
 
-    .result-share button:hover { border-color: var(--ink40); }
-    .result-share button.primary:hover { border-color: var(--indigo); opacity: 0.92; }
+    .result-share button:hover { border-color: var(--ink40); color: var(--ink); }
+    .result-share button.primary:hover { opacity: 0.9; color: var(--paper); }
 
     .share-toast {
       text-align: center;
@@ -601,7 +621,7 @@ const TRAIT_META = {
 
 const ARCHETYPES = {
   delulu: {
-    emoji: "🛒",
+    icon: "[$]",
     name: "Delulu Fantasy Shopper",
     summary: "You don’t have problems — you have a cart full of solutions and a fictional version of your life that’s absolutely thriving.",
     talent: "Manifesting an entire future self, relationship, and morning routine out of one ‘add to basket.’ The vision is immaculate. The shipping is two-day.",
@@ -611,7 +631,7 @@ const ARCHETYPES = {
     share: "i’m not in my flop era, i’m in my pre-order era 🛒✨",
   },
   selfaware: {
-    emoji: "💅",
+    icon: "[i]",
     name: "Painfully Self-Aware Queen",
     summary: "You can narrate your own downfall in real time, with perfect insight, footnotes, and absolutely zero ability to stop it.",
     talent: "Diagnosing yourself faster and more accurately than any professional — annotated, sourced, and delivered as a devastatingly funny bit.",
@@ -621,7 +641,7 @@ const ARCHETYPES = {
     share: "i’m not avoiding growth, i’m just extremely well-informed about it 💅",
   },
   avoid: {
-    emoji: "🕯️",
+    icon: "[zz]",
     name: "Romanticizes Avoidance",
     summary: "You’ve rebranded ignoring your problems as ‘protecting your peace,’ and honestly the marketing is immaculate.",
     talent: "Making avoidance look like a wellness routine — soft lighting, slow mornings, a ‘reset’ that resets everything except the actual issue.",
@@ -631,7 +651,7 @@ const ARCHETYPES = {
     share: "romanticizing my life so hard i don’t have to fix it 🕯️",
   },
   analyze: {
-    emoji: "🧠",
+    icon: "[?]",
     name: "Overanalysis Department Manager",
     summary: "You run a full-time internal investigation into events that lasted four seconds and harmed precisely no one.",
     talent: "Reconstructing any interaction frame-by-frame like a referee reviewing a foul — catching tones, pauses, and subtext no one else even sent.",
@@ -641,7 +661,7 @@ const ARCHETYPES = {
     share: "currently in a meeting with myself about something that didn’t even happen 🧠📊",
   },
   book: {
-    emoji: "📚",
+    icon: "[\"\"]",
     name: "Introverted Book Queen",
     summary: "You’d cancel plans for a fictional character and you have genuinely never been more sure of anything in your life.",
     talent: "Feeling enormous, profound emotions — safely, at a distance, on the page, where nothing can require anything back from you.",
@@ -651,7 +671,7 @@ const ARCHETYPES = {
     share: "social battery: 2%. book battery: infinite 📚",
   },
   productivity: {
-    emoji: "✅",
+    icon: "[x]",
     name: "Emotionally Unavailable Productivity Addict",
     summary: "You will optimise literally anything to avoid feeling one (1) feeling, and your calendar is, frankly, gorgeous.",
     talent: "Being impressively, suspiciously functional while quietly unwell — output flawless, inbox at zero, interior life unread.",
@@ -661,7 +681,7 @@ const ARCHETYPES = {
     share: "emotionally unavailable but my calendar is colour-coded ✅",
   },
   overshare: {
-    emoji: "🌱",
+    icon: "[!!]",
     name: "Healing-Era Oversharer",
     summary: "You’ve turned your trauma into content and your group chat into an ongoing, heavily attended TED talk.",
     talent: "Vulnerability at scale — naming feelings out loud, in detail, sometimes before the wifi has even fully connected.",
@@ -671,7 +691,7 @@ const ARCHETYPES = {
     share: "in my healing era (and i will be telling absolutely everyone) 🌱",
   },
   lowbattery: {
-    emoji: "🦋",
+    icon: "[2%]",
     name: "Low-Battery Social Butterfly",
     summary: "You love everyone deeply and you also need every single one of them to leave immediately.",
     talent: "Being the warmest, most present person in the room — and then evaporating the second the door closes, fully spent.",
@@ -771,7 +791,9 @@ function showResult() {
   const topKey = sorted[0];
   const arch = ARCHETYPES[topKey];
 
-  document.getElementById("result-emoji").textContent = arch.emoji;
+  const iconEl = document.getElementById("result-emoji");
+  iconEl.textContent = arch.icon;
+  iconEl.className = "result-emoji " + TRAIT_META[topKey].color;
   document.getElementById("result-archetype").textContent = arch.name;
   document.getElementById("result-subtitle").textContent = arch.summary;
 
@@ -827,13 +849,13 @@ function shareResult() {
   if (navigator.share) {
     navigator.share({ title: "My Coping Archetype", text, url }).catch(() => {});
   } else {
-    navigator.clipboard.writeText(`${text} ${url}`).then(() => toast("Copied — paste it anywhere ✨"));
+    navigator.clipboard.writeText(`${text} ${url}`).then(() => toast("> copied — paste it anywhere"));
   }
 }
 
 function copyResult() {
   const url = window.location.href;
-  navigator.clipboard.writeText(`${shareText()} ${url}`).then(() => toast("Copied to clipboard ✨"));
+  navigator.clipboard.writeText(`${shareText()} ${url}`).then(() => toast("> copied to clipboard"));
 }
 
 function retakeQuiz() {
