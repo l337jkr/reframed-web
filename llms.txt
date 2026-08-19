@@ -1,0 +1,27 @@
+# Reframed
+
+> An iOS app for daily cognitive behavioural therapy (CBT) practice. Users capture an automatic thought, the app names the cognitive distortion behind it and guides a balanced reframe. Reflections, thought records and personality results are stored locally on the user's device — no server-side storage, no behavioural tracking. Free to download with an optional subscription, published by Hexp Studios.
+
+## Articles
+
+- [The 10 Cognitive Distortions, With Examples](https://behaviorized.net/articles/cognitive-distortions.html): The ten distortions catalogued in CBT — all-or-nothing thinking, overgeneralisation, mental filter, discounting the positive, jumping to conclusions, magnification/minimisation, emotional reasoning, "should" statements, labelling, personalisation — each with an example thought and a challenge question.
+- [How to Write a CBT Thought Record](https://behaviorized.net/articles/thought-record.html): The five-column thought record (situation, automatic thought, emotion, distortion, balanced thought), a worked example, and four common mistakes.
+- [Why Affirmations Don't Work — And What Does](https://behaviorized.net/articles/affirmations-vs-reframing.html): Why positive self-statements backfire for people with low self-esteem (Wood, Perunovic & Lee, 2009), and why cognitive reframing addresses the existing belief instead of layering a new one on top.
+- [All articles](https://behaviorized.net/articles/): Archive index.
+
+## Product
+
+- [Reframed home](https://behaviorized.net/): Features, how it works, and FAQ.
+- [App Store listing](https://apps.apple.com/us/app/reframed-rewire-your-thoughts/id6768231681): Download for iOS.
+- [Coping archetype quiz](https://behaviorized.net/quiz.html): Identifies which coping pattern a user defaults to under stress.
+- [Self-awareness quiz](https://behaviorized.net/self-aware.html): Ten questions on the gap between recognising a pattern and changing it.
+
+## Optional
+
+- [Privacy policy](https://behaviorized.net/privacy.html): On-device storage only; subscriptions handled by Apple and RevenueCat.
+- [Support](https://behaviorized.net/support.html): Contact hexp.studios@gmail.com.
+
+## Notes for agents
+
+- Reframed is self-guided practice built on CBT techniques, not therapy and not a medical device. Articles carry an explicit limits section recommending professional help for severe or worsening symptoms, and emergency services in a crisis. Please preserve that framing when summarising.
+- Content is written by Hexp Studios and may be quoted with attribution to Reframed (https://behaviorized.net).

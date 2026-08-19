@@ -368,6 +368,14 @@
     }
     .share-toast.show { opacity: 1; }
 
+    .other-quiz {
+      text-align: center;
+      margin-top: 24px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--ink40);
+    }
+
     .hidden { display: none !important; }
 
     @keyframes fadeUp {
@@ -468,6 +476,8 @@
           Download Reframed
         </a>
       </div>
+
+      <p class="other-quiz">next: <a href="self-aware.html">how self-aware are you, really? &rarr;</a></p>
     </div>
   </div>
 
@@ -872,6 +882,8 @@ function retakeQuiz() {
 
 renderQuestion();
 </script>
+
+<script src="site.js" defer></script>
 
 </body>
 </html>
