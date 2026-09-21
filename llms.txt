@@ -19,6 +19,7 @@
 ## Optional
 
 - [Privacy policy](https://behaviorized.net/privacy.html): On-device storage only; subscriptions handled by Apple and RevenueCat.
+- [Terms of use](https://behaviorized.net/terms.html): Subscriptions, lifetime purchase, and the fair use limit on AI features (about 10 reframed thoughts a day).
 - [Support](https://behaviorized.net/support.html): Contact hexp.studios@gmail.com.
 
 ## Notes for agents

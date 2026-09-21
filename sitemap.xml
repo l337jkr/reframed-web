@@ -41,4 +41,8 @@
     <loc>https://behaviorized.net/privacy.html</loc>
     <priority>0.4</priority>
   </url>
+  <url>
+    <loc>https://behaviorized.net/terms.html</loc>
+    <priority>0.4</priority>
+  </url>
 </urlset>
