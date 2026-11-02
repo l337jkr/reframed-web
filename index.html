@@ -11,6 +11,47 @@
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   <link rel="stylesheet" href="style.css" />
   <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://behaviorized.net/#org",
+        "name": "Hexp Studios",
+        "url": "https://behaviorized.net/",
+        "email": "hexp.studios@gmail.com",
+        "logo": "https://behaviorized.net/assets/apple-touch-icon.png"
+      },
+      {
+        "@type": "MobileApplication",
+        "@id": "https://behaviorized.net/#app",
+        "name": "Reframed",
+        "alternateName": "Reframed: Rewire Your Thoughts",
+        "description": "A daily cognitive behavioural therapy (CBT) practice app. Capture an automatic thought, see the cognitive distortion behind it named, and write a balanced reframe. Reflections, thought records and personality results are stored on your device.",
+        "operatingSystem": "iOS",
+        "applicationCategory": "HealthApplication",
+        "url": "https://behaviorized.net/",
+        "installUrl": "https://apps.apple.com/us/app/reframed-rewire-your-thoughts/id6768231681",
+        "publisher": { "@id": "https://behaviorized.net/#org" },
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "Free to download. An optional subscription, billed through Apple, unlocks the full practice."
+        },
+        "featureList": [
+          "Personalised daily reflection prompts",
+          "Cognitive distortion detection",
+          "CBT thought records",
+          "Personality profiling",
+          "Insights and visualisations",
+          "Affirmation cards"
+        ]
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -107,10 +148,10 @@
 }
   </script>
 </head>
-<body>
+<body data-thought-rain>
 
 <!-- ── Nav ───────────────────────────────────────────────── -->
-<nav>
+<nav aria-label="Main">
   <div class="container nav-inner">
     <span class="nav-logo">Reframed</span>
     <ul class="nav-links">
@@ -124,6 +165,8 @@
     </ul>
   </div>
 </nav>
+
+<main>
 
 <!-- ── Hero ──────────────────────────────────────────────── -->
 <header class="hero">
@@ -145,8 +188,10 @@
     <span class="small" style="top:6%; left:48%; animation-delay:-11s; animation-duration:22s;">\</span>
   </div>
   <div class="container" style="position:relative;">
-    <span class="hero-eyebrow">Cognitive Behavioural Therapy · Mindfulness</span>
-    <h1>Understand your mind.<br>Reframe your thoughts.</h1>
+    <div class="hero-title">
+      <canvas class="hero-brain" aria-hidden="true"></canvas>
+      <h1>Understand your mind.<br>Reframe your thoughts.</h1>
+    </div>
     <p class="hero-sub">
       A daily reflection companion built around CBT principles. Personalised prompts, thought pattern tracking, and insights shaped to your personality.
     </p>
@@ -159,9 +204,9 @@
       </a>
     </div>
 
-    <div class="terminal">
+    <div class="terminal" role="figure" aria-label="Reframed onboarding screen">
       <div class="terminal-bar">
-        <span class="terminal-dot"></span>
+        <span class="terminal-dot" aria-hidden="true"></span>
         <span class="terminal-title">reframed — onboarding</span>
       </div>
       <div class="terminal-body">
@@ -179,6 +224,77 @@
 
 <hr class="rule" />
 
+<!-- ── The loop: scroll graphic (site.js) ─────────────────── -->
+<section id="the-loop" class="loop">
+  <div class="container">
+    <p class="section-label">The loop</p>
+    <h2 class="section-title">Why a past hurt keeps showing up in the present</h2>
+    <p class="section-body">
+      Scroll to follow how a trigger turns into a loop, and where the loop can break.
+    </p>
+  </div>
+
+  <div class="loop-track">
+    <div class="loop-stage">
+      <div class="container loop-inner">
+        <svg class="loop-diagram" viewBox="0 0 580 460" aria-hidden="true"></svg>
+        <p class="sr-only">Diagram: a past event feeds a loop of six stages. A reminder sets off the alarm, the alarm sets off the body, the body sets off a thought, the thought drives escape, escape brings relief, and relief makes the next reminder more powerful. The loop can be broken at the thought, by reframing it.</p>
+        <ol class="loop-steps">
+          <li class="loop-step" data-tone="past">
+            <p class="loop-tag">&gt; the past</p>
+            <h3>Something overwhelming happened.</h3>
+            <p>The brain files it fast and unfinished. Not as a memory of then, but as a warning about now.</p>
+          </li>
+          <li class="loop-step">
+            <p class="loop-tag">&gt; reminder</p>
+            <h3>Something small brings it back.</h3>
+            <p>A tone of voice. A smell. A door closing too hard. A message left on read. Often you don't even notice the reminder.</p>
+          </li>
+          <li class="loop-step">
+            <p class="loop-tag">&gt; alarm</p>
+            <h3>The alarm fires before you think.</h3>
+            <p>The threat system reacts in milliseconds, as if the danger is happening again. Not remembered: re-lived.</p>
+          </li>
+          <li class="loop-step">
+            <p class="loop-tag">&gt; body</p>
+            <h3>Your body braces.</h3>
+            <p>Racing heart, tight chest, shallow breath. Or the opposite: numb, foggy, far away.</p>
+          </li>
+          <li class="loop-step">
+            <p class="loop-tag">&gt; thought</p>
+            <h3>The mind explains the feeling.</h3>
+            <p class="loop-quote">"It's happening again."<br>"I can't trust anyone."<br>"It was my fault."</p>
+          </li>
+          <li class="loop-step">
+            <p class="loop-tag">&gt; escape</p>
+            <h3>You do whatever makes it stop.</h3>
+            <p>Avoid the place. Check your phone again. Go quiet. Keep everyone happy. Leave early.</p>
+          </li>
+          <li class="loop-step">
+            <p class="loop-tag">&gt; relief</p>
+            <h3>And it works, for now.</h3>
+            <p>The fear drops. That relief is real, which is exactly what makes the next part so convincing.</p>
+          </li>
+          <li class="loop-step" data-tone="tight">
+            <p class="loop-tag">&gt; the loop tightens</p>
+            <h3>Relief teaches the alarm it was right.</h3>
+            <p>The brain learns that the danger was real and escaping saved you. Next time the alarm fires faster, on smaller reminders, and the old memory never gets updated.</p>
+          </li>
+          <li class="loop-step" data-tone="break">
+            <p class="loop-tag">&gt; the break</p>
+            <h3>The loop can break at the thought.</h3>
+            <p>You can't switch the alarm off by force. But you can catch the thought, name it, and check it against now.</p>
+            <p class="loop-quote"><s>It's happening again.</s><br>That was then. This is now, and I'm safe enough to stay.</p>
+            <p class="loop-note">Reframed helps you practise this one thought at a time. It isn't a treatment for trauma. If memories feel overwhelming, a trauma-informed therapist can help.</p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule" />
+
 <!-- ── Features ──────────────────────────────────────────── -->
 <section id="features">
   <div class="container">
@@ -191,38 +307,38 @@
     <div class="features-grid">
 
       <div class="feature-card">
-        <div class="feature-icon indigo">&gt;_</div>
-        <p class="feature-title">Personalised Daily Prompts</p>
+        <div aria-hidden="true" class="feature-icon indigo">&gt;_</div>
+        <h3 class="feature-title">Personalised Daily Prompts</h3>
         <p class="feature-desc">Never "How was your day?" Prompts are scored against your goals and personality — so you get "Which mistake are you still replaying? Write the sentence you'd use on a friend who made it."</p>
       </div>
 
       <div class="feature-card">
-        <div class="feature-icon vermillion">[!]</div>
-        <p class="feature-title">Cognitive Distortion Detection</p>
+        <div aria-hidden="true" class="feature-icon vermillion">[!]</div>
+        <h3 class="feature-title">Cognitive Distortion Detection</h3>
         <p class="feature-desc">"I always ruin everything" is all-or-nothing thinking. Reframed names the pattern in your own words — ten core distortions, from catastrophising to mind reading — and shows you how to challenge it.</p>
       </div>
 
       <div class="feature-card">
-        <div class="feature-icon ochre">:::</div>
-        <p class="feature-title">Thought Records</p>
+        <div aria-hidden="true" class="feature-icon ochre">:::</div>
+        <h3 class="feature-title">Thought Records</h3>
         <p class="feature-desc">Capture automatic thoughts, name the emotion, identify the pattern, and write a balanced reframe — the full CBT thought record, in your pocket.</p>
       </div>
 
       <div class="feature-card">
-        <div class="feature-icon indigo">[=]</div>
-        <p class="feature-title">Personality Profiling</p>
+        <div aria-hidden="true" class="feature-icon indigo">[=]</div>
+        <h3 class="feature-title">Personality Profiling</h3>
         <p class="feature-desc">A guided MBTI-style quiz maps your Big Five traits to a cognitive function stack, shaping every affirmation and prompt you see.</p>
       </div>
 
       <div class="feature-card">
-        <div class="feature-icon ochre">.il</div>
-        <p class="feature-title">Insights & Visualisations</p>
+        <div aria-hidden="true" class="feature-icon ochre">.il</div>
+        <h3 class="feature-title">Insights & Visualisations</h3>
         <p class="feature-desc">Emotion bar charts, activity heatmaps, Big Five radar charts, and distortion breakdowns give you a clear picture of your patterns over time.</p>
       </div>
 
       <div class="feature-card">
-        <div class="feature-icon vermillion">&lt;3</div>
-        <p class="feature-title">Affirmation Cards</p>
+        <div aria-hidden="true" class="feature-icon vermillion">&lt;3</div>
+        <h3 class="feature-title">Affirmation Cards</h3>
         <p class="feature-desc">Swipeable daily affirmation cards tailored to your MBTI type — save favourites and revisit them whenever you need grounding.</p>
       </div>
 
@@ -244,41 +360,41 @@
     <div class="steps">
 
       <div class="step">
-        <span class="step-num">01</span>
+        <span class="step-num" aria-hidden="true">01</span>
         <div class="step-content">
-          <p class="step-title">Set your focus</p>
+          <h3 class="step-title">Set your focus</h3>
           <p class="step-desc">Choose the challenges you're working through — anxiety, perfectionism, relationships, self-worth — and the goals you're moving toward. Reframed uses these to filter every prompt it shows you.</p>
         </div>
       </div>
 
       <div class="step">
-        <span class="step-num">02</span>
+        <span class="step-num" aria-hidden="true">02</span>
         <div class="step-content">
-          <p class="step-title">Discover your personality type</p>
+          <h3 class="step-title">Discover your personality type</h3>
           <p class="step-desc">Take a short Big Five assessment. Reframed maps your trait scores to an MBTI-style cognitive function stack, unlocking personality-matched affirmations and reflection prompts.</p>
         </div>
       </div>
 
       <div class="step">
-        <span class="step-num">03</span>
+        <span class="step-num" aria-hidden="true">03</span>
         <div class="step-content">
-          <p class="step-title">Reflect daily</p>
+          <h3 class="step-title">Reflect daily</h3>
           <p class="step-desc">Each day surfaces a personalised prompt — a fill-in sentence, a multiple-choice scenario, or a guided thought record. Short enough to complete in two minutes, meaningful enough to stay with you.</p>
         </div>
       </div>
 
       <div class="step">
-        <span class="step-num">04</span>
+        <span class="step-num" aria-hidden="true">04</span>
         <div class="step-content">
-          <p class="step-title">Spot and challenge distortions</p>
+          <h3 class="step-title">Spot and challenge distortions</h3>
           <p class="step-desc">When a difficult thought arises, capture it. Reframed walks you through the CBT loop — trigger → emotion → distortion → balanced reframe — helping you build the habit automatically.</p>
         </div>
       </div>
 
       <div class="step">
-        <span class="step-num">05</span>
+        <span class="step-num" aria-hidden="true">05</span>
         <div class="step-content">
-          <p class="step-title">Track your growth</p>
+          <h3 class="step-title">Track your growth</h3>
           <p class="step-desc">Review your emotion trends, distortion frequency, and reflection activity in the Insights tab. Watch patterns shift over weeks and months as your practice deepens.</p>
         </div>
       </div>
@@ -391,21 +507,39 @@
 
     <div class="article-list" style="margin-top:52px;">
 
+      <a class="article-item" href="articles/stop-self-sabotage.html">
+        <p class="article-meta">2 Nov 2026 · 8 min read</p>
+        <h3 class="article-title">How to Stop Self-Sabotaging: What CBT Says About the Pattern</h3>
+        <p class="article-excerpt">Self-sabotage isn't a willpower problem. Why it protects you from a feeling, and how to catch your own pattern before it runs.</p>
+      </a>
+
+      <a class="article-item" href="articles/cognitive-biases-2026.html">
+        <p class="article-meta">21 Oct 2026 · 10 min read</p>
+        <h3 class="article-title">12 Cognitive Biases Shaping How We Think in 2026</h3>
+        <p class="article-excerpt">Confirmation bias, automation bias, the illusory truth effect and nine more: what each one is, a 2026 example, and what it costs us.</p>
+      </a>
+
+      <a class="article-item" href="articles/psycho-cybernetics-and-cbt.html">
+        <p class="article-meta">20 Oct 2026 · 8 min read</p>
+        <h3 class="article-title">Psycho-Cybernetics and CBT: How to Actually Change Your Self-Image</h3>
+        <p class="article-excerpt">Maltz said your self-image sets the limits. How that maps onto CBT, what the evidence says about changing a mindset, and the practice that does it.</p>
+      </a>
+
       <a class="article-item" href="articles/cognitive-distortions.html">
         <p class="article-meta">19 Aug 2026 · 8 min read</p>
-        <p class="article-title">The 10 Cognitive Distortions, With Examples</p>
+        <h3 class="article-title">The 10 Cognitive Distortions, With Examples</h3>
         <p class="article-excerpt">All-or-nothing thinking, catastrophising, mind reading — the ten patterns CBT names, what each sounds like in your own head, and the question that breaks it.</p>
       </a>
 
       <a class="article-item" href="articles/thought-record.html">
         <p class="article-meta">19 Aug 2026 · 7 min read</p>
-        <p class="article-title">How to Write a CBT Thought Record</p>
+        <h3 class="article-title">How to Write a CBT Thought Record</h3>
         <p class="article-excerpt">The core exercise of cognitive behavioural therapy, in five columns. A worked example, plus the four mistakes that make a thought record useless.</p>
       </a>
 
       <a class="article-item" href="articles/affirmations-vs-reframing.html">
         <p class="article-meta">19 Aug 2026 · 6 min read</p>
-        <p class="article-title">Why Affirmations Don't Work — And What Does</p>
+        <h3 class="article-title">Why Affirmations Don't Work — And What Does</h3>
         <p class="article-excerpt">Repeating "I am capable" to a brain that believes otherwise starts an argument you lose. What the research says, and what shifts a belief instead.</p>
       </a>
 
@@ -415,12 +549,15 @@
   </div>
 </section>
 
+</main>
+
 <!-- ── Footer ─────────────────────────────────────────────── -->
 <footer>
   <div class="container">
     <div class="footer-inner">
       <span class="footer-logo">Reframed</span>
       <ul class="footer-links">
+        <li><a href="changelog.html">Changelog</a></li>
         <li><a href="articles/">Articles</a></li>
         <li><a href="privacy.html">Privacy Policy</a></li>
         <li><a href="terms.html">Terms of Use</a></li>
