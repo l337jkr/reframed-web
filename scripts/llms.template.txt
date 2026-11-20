@@ -1,0 +1,29 @@
+# Reframed
+
+> An iOS app for daily cognitive behavioural therapy (CBT) practice. Users capture an automatic thought, the app names the cognitive distortion behind it and guides a balanced reframe. Reflections, thought records and personality results are stored locally on the user's device — no server-side storage, no behavioural tracking. Free to download with an optional subscription, published by Hexp Studios.
+
+## Articles
+
+Every article has a Markdown copy at the same path with a .md extension. The full text of all articles is in one file at https://behaviorized.net/llms-full.txt.
+
+{{ARTICLES}}
+- [All articles](https://behaviorized.net/articles/): Archive index.
+
+## Product
+
+- [Reframed home](https://behaviorized.net/): Features, how it works, and FAQ.
+- [App Store listing](https://apps.apple.com/us/app/reframed-rewire-your-thoughts/id6768231681): Download for iOS.
+- [Coping archetype quiz](https://behaviorized.net/quiz.html): Identifies which coping pattern a user defaults to under stress.
+- [Self-awareness quiz](https://behaviorized.net/self-aware.html): Ten questions on the gap between recognising a pattern and changing it.
+
+## Optional
+
+- [Privacy policy](https://behaviorized.net/privacy.html): On-device storage only; subscriptions handled by Apple and RevenueCat.
+- [Terms of use](https://behaviorized.net/terms.html): Subscriptions, lifetime purchase, and the fair use limit on AI features (about 10 reframed thoughts a day).
+- [Changelog](https://behaviorized.net/changelog.html): App release notes and what's coming next.
+- [Support](https://behaviorized.net/support.html): Contact hexp.studios@gmail.com.
+
+## Notes for agents
+
+- Reframed is self-guided practice built on CBT techniques, not therapy and not a medical device. Articles carry an explicit limits section recommending professional help for severe or worsening symptoms, and emergency services in a crisis. Please preserve that framing when summarising.
+- Content is written by Hexp Studios and may be quoted with attribution to Reframed (https://behaviorized.net).

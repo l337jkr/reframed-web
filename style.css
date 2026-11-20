@@ -754,6 +754,26 @@ footer {
 
 .prose .thought.reframe { border-left-color: var(--green); }
 
+/* "In short" summary at the top of an article */
+.prose .summary {
+  border: 1px solid var(--ink10);
+  border-left: 2px solid var(--indigo);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 16px 20px;
+  margin: 0 0 32px;
+}
+.prose .summary .label {
+  display: block;
+  font-family: var(--font-label);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink40);
+  margin-bottom: 6px;
+}
+.prose .summary p { margin: 0; color: var(--ink); }
+
 .prose ol { padding-left: 22px; margin-bottom: 14px; }
 
 /* Tables in articles: scroll sideways on narrow screens instead of the page */
@@ -1098,3 +1118,17 @@ footer {
   .changelog { padding-top: 32px; padding-bottom: 48px; }
   .changelog-feedback { padding: 24px; }
 }
+
+/* Static "About this quiz" section under the quizzes */
+.quiz-about { padding-top: 24px; border-top: 1px solid var(--rule-soft); }
+.quiz-about details { margin: 18px 0 22px; }
+.quiz-about summary {
+  cursor: pointer;
+  font-family: var(--font-label);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--indigo);
+}
+.quiz-about summary:hover { color: var(--indigo-soft); }
+.quiz-about-list { margin-top: 8px; }
+.quiz-about-list h3 { margin-top: 28px; }
