@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>What's Your Chronically Online Coping Archetype? — Reframed</title>
-  <meta name="description" content="A loving, brutally honest personality quiz. 12 unhinged scenarios reveal your chronically online coping archetype. Shareable result included." />
-  <meta property="og:title" content="What's Your Chronically Online Coping Archetype?" />
-  <meta property="og:description" content="A loving psychological callout in quiz form. Find your coping archetype in 3 minutes — then send it to the friend it's actually about." />
+  <title>The Brutally Honest Quiz | Reframed</title>
+  <meta name="description" content="Twenty uncomfortable questions, ten modern archetypes, and the one thing yours needs to hear. Takes four minutes. Not a diagnosis." />
+  <meta property="og:title" content="The Brutally Honest Quiz" />
+  <meta property="og:description" content="Twenty uncomfortable questions. Pick what you'd actually do. Get the type you're closest to and the one thing it needs to hear." />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="theme-color" content="#131210" />
@@ -20,9 +20,9 @@
     "@graph": [
       {
         "@type": "WebPage",
-        "name": "What's Your Chronically Online Coping Archetype?",
+        "name": "The Brutally Honest Quiz",
         "url": "https://behaviorized.net/quiz.html",
-        "description": "A 12-question personality quiz, for fun and self-reflection, that assigns one of eight coping archetypes, each with a strength, a hard truth and one practical step. Not a diagnosis.",
+        "description": "A 20-question quiz, for fun and self-reflection, that matches you to one of ten modern archetypes, each with how it looks, what is really going on and the one thing it needs to hear. Not a diagnosis.",
         "inLanguage": "en",
         "isPartOf": {
           "@type": "WebSite",
@@ -36,7 +36,7 @@
         },
         "mainEntity": {
           "@type": "Quiz",
-          "name": "Chronically Online Coping Archetype quiz",
+          "name": "The Brutally Honest Quiz",
           "about": {
             "@type": "Thing",
             "name": "Coping",
@@ -56,7 +56,7 @@
           {
             "@type": "ListItem",
             "position": 2,
-            "name": "Coping archetype quiz",
+            "name": "The brutally honest quiz",
             "item": "https://behaviorized.net/quiz.html"
           }
         ]
@@ -421,6 +421,59 @@
     }
     .share-toast.show { opacity: 1; }
 
+    /* Either-or scale */
+    .scale-statements { display: flex; gap: 20px; font-size: 16px; line-height: 1.5; color: var(--ink); }
+    .scale-statements > div { flex: 1; }
+    .scale-statements > div:last-child { text-align: right; }
+    .scale-row { display: flex; align-items: center; justify-content: space-between; margin: 20px 0 10px; }
+    .scale-dot {
+      border: 2px solid var(--ink40);
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      padding: 0;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .scale-dot.s0, .scale-dot.s4 { width: 44px; height: 44px; }
+    .scale-dot.s1, .scale-dot.s3 { width: 36px; height: 36px; }
+    .scale-dot.s2 { width: 28px; height: 28px; }
+    .scale-dot:hover { border-color: var(--indigo); background: rgba(123,143,212,0.25); }
+    .scale-hint { font-size: 14px; color: var(--ink60); text-align: center; }
+
+    /* Code for the app */
+    .code-box {
+      background: var(--paper2);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .code-box p { font-size: 15px; color: var(--ink60); line-height: 1.6; margin-bottom: 14px; }
+    .code-value {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 28px;
+      letter-spacing: 3px;
+      color: var(--ink);
+      margin-bottom: 14px;
+      user-select: all;
+    }
+    .code-box button {
+      padding: 10px 20px;
+      font-family: var(--font-label);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--ink60);
+      cursor: pointer;
+    }
+    .code-box button:hover { border-color: var(--ink40); color: var(--ink); }
+
     .other-quiz {
       text-align: center;
       margin-top: 24px;
@@ -458,9 +511,9 @@
   <div class="quiz-hero">
     <div class="hero-gradient"></div>
     <div class="container" style="position:relative;">
-      <span class="hero-eyebrow">a loving callout · 3 minutes</span>
-      <h1 id="quiz-title">what's your chronically<br>online coping archetype?</h1>
-      <p id="quiz-subtitle">12 unhinged but accurate scenarios, decided by your brutally honest best friend. you will feel seen. you will feel attacked. you will send it to the group chat.</p>
+      <span class="hero-eyebrow">no flattery · 4 minutes</span>
+      <h1 id="quiz-title">the brutally honest quiz</h1>
+      <p id="quiz-subtitle">Ten uncomfortable situations and ten either-ors about what you believe. Pick what you'd actually do, not what you'd like to think you'd do. You'll get the type you're closest to, what's really going on underneath it, and the one thing it needs to hear. It's designed to be uncomfortable: the questions put you under a bit of pressure on purpose, because that's when your habits take over.</p>
     </div>
   </div>
 
@@ -476,7 +529,7 @@
 
   <div class="result-wrap hidden" id="result-wrap">
     <div class="fade-up">
-      <p class="result-eyebrow">YOUR COPING ARCHETYPE</p>
+      <p class="result-eyebrow">YOU CAME OUT AS</p>
 
       <div class="result-primary">
         <div class="result-emoji" id="result-emoji"></div>
@@ -484,27 +537,31 @@
         <p class="result-subtitle" id="result-subtitle"></p>
       </div>
 
-      <div class="result-bars" id="result-bars">
-        <h3>how your coping actually breaks down</h3>
-      </div>
-
       <div class="result-fields">
         <div class="result-field">
-          <div class="result-field-label">your special talent</div>
-          <div class="result-field-body" id="field-talent"></div>
+          <div class="result-field-label">how it looks</div>
+          <div class="result-field-body" id="field-vibe"></div>
         </div>
         <div class="result-field">
           <div class="result-field-label">the brutal truth</div>
           <div class="result-field-body" id="field-truth"></div>
         </div>
-        <div class="result-field">
-          <div class="result-field-label">your current coping mechanism</div>
-          <div class="result-field-body" id="field-coping"></div>
+        <div class="result-field help">
+          <div class="result-field-label">what you need to hear</div>
+          <div class="result-field-body" id="field-hear"></div>
         </div>
         <div class="result-field help">
-          <div class="result-field-label">what would actually help</div>
-          <div class="result-field-body" id="field-help"></div>
+          <div class="result-field-label">where to start</div>
+          <div class="result-field-body" id="field-start"></div>
         </div>
+      </div>
+
+      <div class="result-bars" id="result-bars"></div>
+
+      <div class="code-box">
+        <p>Got the Reframed app? Enter this code when it asks you to do the quiz. You'll skip it there and pick up where this left off.</p>
+        <div class="code-value" id="app-code"></div>
+        <button onclick="copyCode()">Copy code</button>
       </div>
 
       <div class="share-phrase-box">
@@ -522,8 +579,8 @@
       <hr class="result-divider" />
 
       <div class="result-cta-box">
-        <h3>self-aware is step one. reframed is the rest.</h3>
-        <p>You can name the pattern — now do something with it. Reframed turns your coping loops into CBT-backed reflections, personalised to how your brain actually works.</p>
+        <h3>knowing your type is step one. reframed is the rest.</h3>
+        <p>You can name the pattern. Now do something about it. Reframed helps you catch the thought behind it, question it, and try one small thing differently. Bring your code and skip the quiz in the app.</p>
         <a class="appstore-badge" href="https://apps.apple.com/us/app/reframed-rewire-your-thoughts/id6768231681" target="_blank" rel="noopener" style="margin-top:4px;" aria-label="Download on the App Store">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 22 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.1 22C7.78 22.05 6.8 20.68 5.96 19.47C4.25 17 2.94 12.45 4.7 9.39C5.57 7.87 7.13 6.91 8.82 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z" fill="currentColor"/>
@@ -541,52 +598,74 @@
 <!-- ── About this quiz (static text, readable without JavaScript) ── -->
 <section class="prose quiz-about" aria-labelledby="about-quiz">
   <h2 id="about-quiz">About this quiz</h2>
-  <p>Twelve everyday scenarios, four answers each. Every answer adds points toward one or more of eight coping archetypes: the habits people fall back on when a feeling gets uncomfortable. Your result is the archetype with the most points, shown with a percentage breakdown across all eight, a strength, a hard truth and one practical thing to try.</p>
+  <p>Twenty questions. Ten are uncomfortable situations, like saying how you feel, saying no or being criticised, with four things you might do. Ten are pairs of opposing statements with a five-point scale between them. Every answer counts towards one or more of ten archetypes: familiar ways people protect themselves from failing, being rejected or feeling something uncomfortable. Your result is the one your answers point at most, shown with how it looks from outside, what's really going on underneath, and the one thing that type needs to hear. You also get a code: enter it in the Reframed app and you won't be asked to do the quiz again.</p>
   <details>
-    <summary>See all eight archetypes</summary>
+    <summary>See all ten archetypes</summary>
     <div class="quiz-about-list">
-      <h3>Delulu Fantasy Shopper</h3>
-      <p>You don’t have problems — you have a cart full of solutions and a fictional version of your life that’s absolutely thriving.</p>
-      <p><strong>The hard truth:</strong> You’re not buying the thing, you’re buying the feeling — and the fantasy is cheaper than sitting with whatever the present moment is asking of you.</p>
-      <p><strong>One thing to try:</strong> Before checkout, sit with the wanting for ten minutes. Ask what the fantasy is protecting you from — the answer is usually the thing actually worth tending to.</p>
+      <!-- archetypes:start -->
+      <h3>The Optimise-Or-Die Perfectionist</h3>
+      <p>Colour-coded templates, 5am ice baths, a beautiful desk, and a new productivity system every month.</p>
+      <p><strong>The brutal truth:</strong> It's paralysis dressed up as ambition. Researching the best system is how you put off starting, because starting is where you could fail. It's all or nothing with you, so one missed morning writes off the whole week.</p>
+      <p><strong>What you need to hear:</strong> A messy version you finish beats a perfect one you never start. Do it badly today, on purpose, and see what actually happens.</p>
+      <p><strong>Where to start:</strong> Perfectionism</p>
 
-      <h3>Painfully Self-Aware Queen</h3>
-      <p>You can narrate your own downfall in real time, with perfect insight, footnotes, and absolutely zero ability to stop it.</p>
-      <p><strong>The hard truth:</strong> Awareness isn’t the same as change. You’ve turned ‘knowing exactly what’s wrong’ into the most comfortable hiding place you own.</p>
-      <p><strong>One thing to try:</strong> Do one boring, un-clever, unposted thing this week instead of explaining, beautifully, why you won’t. Insight is the warm-up, not the workout.</p>
+      <h3>The Anxious Golden Retriever</h3>
+      <p>Three exclamation marks in every text, a reply within thirty seconds, and the loudest supporter of everyone you know.</p>
+      <p><strong>The brutal truth:</strong> You read a full stop at the end of "Okay." as a declaration of war. You say yes while the resentment quietly builds, because a boundary feels like the thing that will make people leave.</p>
+      <p><strong>What you need to hear:</strong> People who only stay while you agree with them aren't staying for you. Say one honest no this week and see who's still there.</p>
+      <p><strong>Where to start:</strong> Avoiding conflict</p>
 
-      <h3>Romanticizes Avoidance</h3>
-      <p>You’ve rebranded ignoring your problems as ‘protecting your peace,’ and honestly the marketing is immaculate.</p>
-      <p><strong>The hard truth:</strong> Self-care has quietly become your most elaborate avoidance strategy. The candle is lovely. The unopened email is still there.</p>
-      <p><strong>One thing to try:</strong> Name the one thing you’re avoiding, out loud, then do the smallest possible version of it today. Two minutes counts. Peace you have to maintain by hiding isn’t peace yet.</p>
+      <h3>The Self-Diagnosing Essayist</h3>
+      <p>Fluent in therapy terms, three-hour psychology podcasts, and four-minute voice notes explaining exactly why you're sad.</p>
+      <p><strong>The brutal truth:</strong> You've mistaken going over it again for dealing with it. Turning a feeling into a research paper keeps it at arm's length, so you never have to actually feel it.</p>
+      <p><strong>What you need to hear:</strong> Understanding the cage isn't the same as opening the door. You don't need one more explanation. You need to do one small thing differently.</p>
+      <p><strong>Where to start:</strong> Procrastination</p>
 
-      <h3>Overanalysis Department Manager</h3>
-      <p>You run a full-time internal investigation into events that lasted four seconds and harmed precisely no one.</p>
-      <p><strong>The hard truth:</strong> You call it ‘being prepared,’ but you’re mostly just paying for future suffering in advance, in full, with interest.</p>
-      <p><strong>One thing to try:</strong> Give the spiral a container: a 15-minute ‘worry window,’ then let the rest go un-rendered. Your brain is brilliant — point it at what’s in front of you, not at someone’s eyebrow from Tuesday.</p>
+      <h3>The Nonchalant Final Boss</h3>
+      <p>Lowercase texts, one-word replies fourteen hours later, and a face that says caring about anything is embarrassing.</p>
+      <p><strong>The brutal truth:</strong> Your biggest fear is being seen trying. So you starve every relationship and ambition of effort before it can embarrass you. One foot out the door keeps you in control, and it keeps anyone from getting close.</p>
+      <p><strong>What you need to hear:</strong> Not trying doesn't protect you from failing. It's failing with extra steps. Care about one thing out loud, where someone can see.</p>
+      <p><strong>Where to start:</strong> Fear of failure</p>
 
-      <h3>Introverted Book Queen</h3>
-      <p>You’d cancel plans for a fictional character and you have genuinely never been more sure of anything in your life.</p>
-      <p><strong>The hard truth:</strong> Fiction is where you let yourself feel the things you quietly won’t risk feeling out loud with real people.</p>
-      <p><strong>One thing to try:</strong> Let one actual human in as far as you let your favourite narrator. Start small — the story you’re part of can be just as good as the ones you finish.</p>
+      <h3>The Hyper-Vigilant Checker</h3>
+      <p>A folder of screenshots, symptoms searched at midnight, and every sent message reread five times to check it didn't sound weird.</p>
+      <p><strong>The brutal truth:</strong> You want to be completely sure before you can relax, and the internet will let you check forever. Reassurance works like salt water: every sip makes the next thirst worse.</p>
+      <p><strong>What you need to hear:</strong> You'll never be sure enough, and you don't need to be. Leave one thing unchecked today and notice that you cope.</p>
+      <p><strong>Where to start:</strong> Need for certainty</p>
 
-      <h3>Emotionally Unavailable Productivity Addict</h3>
-      <p>You will optimise literally anything to avoid feeling one (1) feeling, and your calendar is, frankly, gorgeous.</p>
-      <p><strong>The hard truth:</strong> Your to-do list is a beautifully organised way of never checking in with yourself. ‘Busy’ has become your anaesthetic.</p>
-      <p><strong>One thing to try:</strong> Schedule feeling something the way you’d schedule a meeting — non-negotiable, in the calendar, with you. Rest isn’t the reward for productivity; it’s the thing keeping you alive enough to do it.</p>
+      <h3>The Omniscient Micro-Manager</h3>
+      <p>The locked holiday spreadsheet, everyone's live location "for safety", and the restaurant menu read three days ahead.</p>
+      <p><strong>The brutal truth:</strong> You call it being organised. It's worry: anything you can't predict feels like a threat, so you try to bully the future into behaving. You're exhausted because you don't trust anyone else with the smallest detail.</p>
+      <p><strong>What you need to hear:</strong> Most things go fine without you steering them. Hand one thing over this week, don't check on it, and see what happens.</p>
+      <p><strong>Where to start:</strong> Need for certainty</p>
 
-      <h3>Healing-Era Oversharer</h3>
-      <p>You’ve turned your trauma into content and your group chat into an ongoing, heavily attended TED talk.</p>
-      <p><strong>The hard truth:</strong> Talking about healing can quietly become a substitute for actually doing it. The processing is real; so is using it to skip the quiet part.</p>
-      <p><strong>One thing to try:</strong> Keep one feeling fully private long enough to actually feel it, before it becomes a story for the timeline. Some healing happens in the room with no audience.</p>
+      <h3>The Autopilot Zombie</h3>
+      <p>A podcast at double speed, a feed in your hand, a comfort show in the background, and "wait, how is it already November?"</p>
+      <p><strong>The brutal truth:</strong> The noise is anaesthetic. The second boredom or an uncomfortable thought turns up, you drown it out until you're numb, and your own life goes past like something on in the background.</p>
+      <p><strong>What you need to hear:</strong> The thought you keep drowning out will still be there when the battery dies. Give it ten quiet minutes and hear what it wants.</p>
+      <p><strong>Where to start:</strong> Procrastination</p>
 
-      <h3>Low-Battery Social Butterfly</h3>
-      <p>You love everyone deeply and you also need every single one of them to leave immediately.</p>
-      <p><strong>The hard truth:</strong> You give until you’re empty, then disappear and call it ‘recharging.’ The left-on-read isn’t coldness; it’s a battery at zero.</p>
-      <p><strong>One thing to try:</strong> Protect the battery before it hits 0%, not after. Leave the party while you still like everyone — boundaries up front mean you don’t have to vanish to survive.</p>
+      <h3>The Performative Stoic</h3>
+      <p>A minimalist profile, one post every eight months, "protecting my peace", and proud of needing nobody.</p>
+      <p><strong>The brutal truth:</strong> It's avoidance sold as enlightenment. You cut people off at the first sign of friction and use therapy words to dodge ordinary accountability, so you get to leave before anyone can reject you.</p>
+      <p><strong>What you need to hear:</strong> Peace that only lasts while nobody's close isn't peace. It's hiding. Stay in one awkward conversation instead of disappearing.</p>
+      <p><strong>Where to start:</strong> Asking for help</p>
+
+      <h3>The Main Character Martyr</h3>
+      <p>Posts about how healing isn't linear, cryptic quotes, and a life that plays like an indie film.</p>
+      <p><strong>The brutal truth:</strong> Somewhere along the way you decided that suffering makes you deep, so calm feels boring. When things settle, you quietly unsettle them, because a hard chapter gives you something to tell.</p>
+      <p><strong>What you need to hear:</strong> You're allowed to be fine. You're still interesting without a crisis. Let one good week stay good.</p>
+      <p><strong>Where to start:</strong> Self-criticism</p>
+
+      <h3>The Cynical Doomer</h3>
+      <p>Dry memes, sarcasm for every occasion, and "it's cooked" as the answer to anything anyone tries.</p>
+      <p><strong>The brutal truth:</strong> Cynicism is the cheapest armour there is. If the whole game is rigged and stupid, you never have to play, and you never have to find out what happens when you try your hardest and it still doesn't work.</p>
+      <p><strong>What you need to hear:</strong> Mocking the people who try doesn't put you above them. It means they're playing and you're watching. Try at one thing, sincerely.</p>
+      <p><strong>Where to start:</strong> Fear of failure</p>
+      <!-- archetypes:end -->
     </div>
   </details>
-  <p>This quiz is for fun and self-reflection, not a diagnosis. Coping habits like these often run on the same thoughts that CBT works with. <a href="articles/five-thinking-patterns.html">Five thinking patterns to catch first</a> is a good place to start.</p>
+  <p>This quiz is for fun and self-reflection, not a diagnosis. Habits like these often run on the same thoughts that CBT works with. <a href="articles/five-thinking-patterns.html">Five thinking patterns to catch first</a> is a good place to start.</p>
 </section>
 
 </main>
@@ -603,240 +682,74 @@
         <li><a href="mailto:hexp.studios@gmail.com">Contact</a></li>
       </ul>
     </div>
-    <p class="footer-copy">&copy; 2025 Hexp Studios. All rights reserved. This quiz is for fun and self-reflection — not a diagnosis.</p>
+    <p class="footer-copy">&copy; 2025 Hexp Studios. All rights reserved. This quiz is for fun and self-reflection, not a diagnosis.</p>
   </div>
 </footer>
 
+<script src="quiz-data.js"></script>
 <script>
-// ═══════════════════════════════════════════════════════════════
-// Questions — each option carries weighted points toward archetypes.
-// Scenarios reveal the trait sideways; nothing asks "do you overthink?"
-// ═══════════════════════════════════════════════════════════════
-const QUESTIONS = [
-  {
-    text: "someone replies “okay” instead of “okayyy.” what happens next?",
-    options: [
-      { t: "nothing. i’m emotionally regulated against my will", w: { productivity: 3, avoid: 1 } },
-      { t: "i reread the entire conversation to locate the exact moment it ended", w: { analyze: 3 } },
-      { t: "i decide, very calmly, that i never liked them anyway", w: { avoid: 3, selfaware: 1 } },
-      { t: "i add three small things to my cart as an act of emotional recovery", w: { delulu: 3 } },
-    ],
-  },
-  {
-    text: "your friday night plans just got cancelled. your honest first reaction:",
-    options: [
-      { t: "thank GOD — i’ve been performing extroversion all week on 4% battery", w: { lowbattery: 3 } },
-      { t: "perfect, now i can finish my book and emotionally bond with a fictional duke", w: { book: 3 } },
-      { t: "time to send a 3-paragraph voice note to the group chat about how i’m Feeling", w: { overshare: 3 } },
-      { t: "i KNEW this would happen. i could narrate my own social decline in real time", w: { selfaware: 3, analyze: 1 } },
-    ],
-  },
-  {
-    text: "you’ve got one completely free saturday. the plan is:",
-    options: [
-      { t: "buy the £40 candle + matching set for the main-character morning routine i’ll definitely start", w: { delulu: 3 } },
-      { t: "mentally rehearse a conversation i need to have, in case it ever happens", w: { analyze: 3 } },
-      { t: "blackout curtains, one (1) book, zero (0) humans, total bliss", w: { book: 3, lowbattery: 1 } },
-      { t: "“reset my whole life,” which mostly means cleaning while ignoring the actual problem", w: { avoid: 3 } },
-    ],
-  },
-  {
-    text: "“no, but how are you, REALLY?” your move:",
-    options: [
-      { t: "deflect with my to-do list — i’m not avoiding feelings, i’m just genuinely very busy", w: { productivity: 3 } },
-      { t: "open the floodgates. they asked. legally i now have to tell them everything", w: { overshare: 3 } },
-      { t: "“good!” (i love them. i also need this to end so i can go lie down)", w: { lowbattery: 3 } },
-      { t: "deliver a flawless summary of my issues that i will absolutely not act on", w: { selfaware: 3 } },
-    ],
-  },
-  {
-    text: "you sent a text two hours ago. no reply. you:",
-    options: [
-      { t: "have already located the typo, the tone, and the precise word that ended us", w: { analyze: 3 } },
-      { t: "distract myself by planning the apology gift they’ll buy when they realise they were wrong", w: { delulu: 3 } },
-      { t: "put my phone in another room and call it a digital detox", w: { avoid: 3, productivity: 1 } },
-      { t: "honestly forgot — i was 200 pages deep and unavailable to reality", w: { book: 3 } },
-    ],
-  },
-  {
-    text: "it’s 1am. you should be asleep. instead you’re:",
-    options: [
-      { t: "posting a very vulnerable note to my close-friends story", w: { overshare: 3 } },
-      { t: "lying in the dark recovering from the exhausting act of having a personality today", w: { lowbattery: 3 } },
-      { t: "watching a productivity video so tomorrow i can finally become a different person", w: { productivity: 3, delulu: 1 } },
-      { t: "doomscrolling while fully aware that doomscrolling is making it worse", w: { selfaware: 3, analyze: 1 } },
-    ],
-  },
-  {
-    text: "a tiny, meaningless inconvenience happens. your brain immediately:",
-    options: [
-      { t: "convenes an emergency meeting to win an argument with someone who isn’t here", w: { analyze: 3 } },
-      { t: "decides this is a Sign and opens a cart for an entire new lifestyle", w: { delulu: 3 } },
-      { t: "retreats into a story where all the problems belong to fictional people", w: { book: 3, avoid: 1 } },
-      { t: "decides we are simply not dealing with this today, or possibly ever", w: { avoid: 3 } },
-    ],
-  },
-  {
-    text: "one small thing goes wrong at noon. by tonight you have:",
-    options: [
-      { t: "a complete diagnosis of why i’m Like This, and zero plan to change it", w: { selfaware: 3 } },
-      { t: "rearranged my whole calendar so the feeling has nowhere to live", w: { productivity: 3 } },
-      { t: "told four people, started a fresh journal, and looked up therapists", w: { overshare: 3 } },
-      { t: "cancelled the entire week to “recover” from a ten-minute event", w: { lowbattery: 3, avoid: 1 } },
-    ],
-  },
-  {
-    text: "your ideal recovery from a genuinely hard week is:",
-    options: [
-      { t: "tea, rain sounds, and a novel i can fully disappear into for nine hours", w: { book: 3 } },
-      { t: "an aesthetic haul that promises me a more put-together future self", w: { delulu: 3 } },
-      { t: "lying flat, replaying everything i could’ve done differently since roughly birth", w: { analyze: 3 } },
-      { t: "a “soft life reset” that is legally distinct from solving any actual problem", w: { avoid: 3 } },
-    ],
-  },
-  {
-    text: "your relationship with self-improvement content is, honestly:",
-    options: [
-      { t: "i’ve optimised everything except the part where i feel things", w: { productivity: 3 } },
-      { t: "i quote my therapist to strangers and i WILL bring up attachment styles", w: { overshare: 3 } },
-      { t: "i’ve watched enough to diagnose everyone — including me — and fix no one", w: { selfaware: 3, analyze: 1 } },
-      { t: "i save it for later, get overwhelmed, and need a little nap about it", w: { lowbattery: 3 } },
-    ],
-  },
-  {
-    text: "you’re stressed and the card is already in your hand. you:",
-    options: [
-      { t: "buy the thing future-me will use to become a completely different, better person", w: { delulu: 3 } },
-      { t: "don’t buy it, but research it for 90 minutes as a refined form of suffering", w: { analyze: 3 } },
-      { t: "close the app to “deal with it later” (later being a mythical, sacred place)", w: { avoid: 3 } },
-      { t: "buy four more books for the shelf i lovingly call my “someday” pile", w: { book: 3, delulu: 1 } },
-    ],
-  },
-  {
-    text: "someone you really like takes a while to text back. you:",
-    options: [
-      { t: "narrate, in real time, exactly which attachment wound this is poking", w: { selfaware: 3 } },
-      { t: "are honestly relieved — now i don’t have to reply at my current battery level", w: { lowbattery: 3 } },
-      { t: "give the group chat live commentary and a full emotional analysis", w: { overshare: 3 } },
-      { t: "bury it under tasks so i don’t have to notice that i care", w: { productivity: 3 } },
-    ],
-  },
-];
+// Questions, archetypes and the version come from quiz-data.js, which is
+// generated from the app's data so both ask the same thing. The code below
+// (ranking and the app code) mirrors data/honestQuiz.ts in the app: change
+// one and you must change the other.
+const QUIZ = window.HONEST_QUIZ;
+const QUESTIONS = QUIZ.questions;
+const ARCHETYPES = QUIZ.archetypes;
+const COLORS = ["vermillion", "indigo", "ochre", "ink"];
+const SCALE_LABELS = ["Strongly the first statement", "More the first statement", "Neither", "More the second statement", "Strongly the second statement"];
 
-// ═══════════════════════════════════════════════════════════════
-// 8 archetypes
-// ═══════════════════════════════════════════════════════════════
-const ARCHETYPE_KEYS = ["delulu","selfaware","avoid","analyze","book","productivity","overshare","lowbattery"];
-
-const TRAIT_META = {
-  delulu:       { label: "Delulu Fantasy Shopper", color: "ochre" },
-  selfaware:    { label: "Painfully Self-Aware Queen", color: "vermillion" },
-  avoid:        { label: "Romanticizes Avoidance", color: "indigo" },
-  analyze:      { label: "Overanalysis Dept. Manager", color: "ink" },
-  book:         { label: "Introverted Book Queen", color: "indigo" },
-  productivity: { label: "Emotionally Unavailable Productivity Addict", color: "ink" },
-  overshare:    { label: "Healing-Era Oversharer", color: "vermillion" },
-  lowbattery:   { label: "Low-Battery Social Butterfly", color: "ochre" },
-};
-
-const ARCHETYPES = {
-  delulu: {
-    icon: "[$]",
-    name: "Delulu Fantasy Shopper",
-    summary: "You don’t have problems — you have a cart full of solutions and a fictional version of your life that’s absolutely thriving.",
-    talent: "Manifesting an entire future self, relationship, and morning routine out of one ‘add to basket.’ The vision is immaculate. The shipping is two-day.",
-    truth: "You’re not buying the thing, you’re buying the feeling — and the fantasy is cheaper than sitting with whatever the present moment is asking of you.",
-    coping: "Retail therapy as a free meditation app: a small, beautiful purchase to recover from an emotion you haven’t named yet.",
-    help: "Before checkout, sit with the wanting for ten minutes. Ask what the fantasy is protecting you from — the answer is usually the thing actually worth tending to.",
-    share: "i’m not in my flop era, i’m in my pre-order era 🛒✨",
-  },
-  selfaware: {
-    icon: "[i]",
-    name: "Painfully Self-Aware Queen",
-    summary: "You can narrate your own downfall in real time, with perfect insight, footnotes, and absolutely zero ability to stop it.",
-    talent: "Diagnosing yourself faster and more accurately than any professional — annotated, sourced, and delivered as a devastatingly funny bit.",
-    truth: "Awareness isn’t the same as change. You’ve turned ‘knowing exactly what’s wrong’ into the most comfortable hiding place you own.",
-    coping: "Making every flaw into a joke before anyone else can, so it can’t actually reach you.",
-    help: "Do one boring, un-clever, unposted thing this week instead of explaining, beautifully, why you won’t. Insight is the warm-up, not the workout.",
-    share: "i’m not avoiding growth, i’m just extremely well-informed about it 💅",
-  },
-  avoid: {
-    icon: "[zz]",
-    name: "Romanticizes Avoidance",
-    summary: "You’ve rebranded ignoring your problems as ‘protecting your peace,’ and honestly the marketing is immaculate.",
-    talent: "Making avoidance look like a wellness routine — soft lighting, slow mornings, a ‘reset’ that resets everything except the actual issue.",
-    truth: "Self-care has quietly become your most elaborate avoidance strategy. The candle is lovely. The unopened email is still there.",
-    coping: "‘I’ll deal with it later,’ where later is a beautiful, mythical place you are spiritually committed to never visiting.",
-    help: "Name the one thing you’re avoiding, out loud, then do the smallest possible version of it today. Two minutes counts. Peace you have to maintain by hiding isn’t peace yet.",
-    share: "romanticizing my life so hard i don’t have to fix it 🕯️",
-  },
-  analyze: {
-    icon: "[?]",
-    name: "Overanalysis Department Manager",
-    summary: "You run a full-time internal investigation into events that lasted four seconds and harmed precisely no one.",
-    talent: "Reconstructing any interaction frame-by-frame like a referee reviewing a foul — catching tones, pauses, and subtext no one else even sent.",
-    truth: "You call it ‘being prepared,’ but you’re mostly just paying for future suffering in advance, in full, with interest.",
-    coping: "Winning imaginary arguments at 1am against people who are asleep and have no idea the trial is ongoing.",
-    help: "Give the spiral a container: a 15-minute ‘worry window,’ then let the rest go un-rendered. Your brain is brilliant — point it at what’s in front of you, not at someone’s eyebrow from Tuesday.",
-    share: "currently in a meeting with myself about something that didn’t even happen 🧠📊",
-  },
-  book: {
-    icon: "[\"\"]",
-    name: "Introverted Book Queen",
-    summary: "You’d cancel plans for a fictional character and you have genuinely never been more sure of anything in your life.",
-    talent: "Feeling enormous, profound emotions — safely, at a distance, on the page, where nothing can require anything back from you.",
-    truth: "Fiction is where you let yourself feel the things you quietly won’t risk feeling out loud with real people.",
-    coping: "A 600-page book, a ‘do not perceive me’ candle, and a heart that’s wide open as long as it’s for someone who isn’t real.",
-    help: "Let one actual human in as far as you let your favourite narrator. Start small — the story you’re part of can be just as good as the ones you finish.",
-    share: "social battery: 2%. book battery: infinite 📚",
-  },
-  productivity: {
-    icon: "[x]",
-    name: "Emotionally Unavailable Productivity Addict",
-    summary: "You will optimise literally anything to avoid feeling one (1) feeling, and your calendar is, frankly, gorgeous.",
-    talent: "Being impressively, suspiciously functional while quietly unwell — output flawless, inbox at zero, interior life unread.",
-    truth: "Your to-do list is a beautifully organised way of never checking in with yourself. ‘Busy’ has become your anaesthetic.",
-    coping: "Burying every inconvenient emotion under tasks so well that you genuinely don’t notice it’s there until it’s very, very loud.",
-    help: "Schedule feeling something the way you’d schedule a meeting — non-negotiable, in the calendar, with you. Rest isn’t the reward for productivity; it’s the thing keeping you alive enough to do it.",
-    share: "emotionally unavailable but my calendar is colour-coded ✅",
-  },
-  overshare: {
-    icon: "[!!]",
-    name: "Healing-Era Oversharer",
-    summary: "You’ve turned your trauma into content and your group chat into an ongoing, heavily attended TED talk.",
-    talent: "Vulnerability at scale — naming feelings out loud, in detail, sometimes before the wifi has even fully connected.",
-    truth: "Talking about healing can quietly become a substitute for actually doing it. The processing is real; so is using it to skip the quiet part.",
-    coping: "Live-narrating your inner world to anyone with a pulse and a phone, because saying it feels almost like solving it.",
-    help: "Keep one feeling fully private long enough to actually feel it, before it becomes a story for the timeline. Some healing happens in the room with no audience.",
-    share: "in my healing era (and i will be telling absolutely everyone) 🌱",
-  },
-  lowbattery: {
-    icon: "[2%]",
-    name: "Low-Battery Social Butterfly",
-    summary: "You love everyone deeply and you also need every single one of them to leave immediately.",
-    talent: "Being the warmest, most present person in the room — and then evaporating the second the door closes, fully spent.",
-    truth: "You give until you’re empty, then disappear and call it ‘recharging.’ The left-on-read isn’t coldness; it’s a battery at zero.",
-    coping: "An enthusiastic, genuine ‘YES!’ followed by a quiet collapse and three days of horizontal recovery.",
-    help: "Protect the battery before it hits 0%, not after. Leave the party while you still like everyone — boundaries up front mean you don’t have to vanish to survive.",
-    share: "i had SO much fun, please never invite me anywhere again 🦋🔋",
-  },
-};
-
-// ═══════════════════════════════════════════════════════════════
-// Engine
-// ═══════════════════════════════════════════════════════════════
 let currentQ = 0;
-const totals = {};
-const maxes = {};
+let answers = [];
 
-// Pre-compute the max points each archetype can earn (for % breakdown).
+// A picked option is worth 2 to its archetype. On a scale, the far ends are
+// worth 2 to that end's archetypes, one step in is worth 1, the middle nothing.
+function pointsFor(q, answer) {
+  if (q.type === "choice") return [[q.options[answer].to, 2]];
+  const lean = answer - 2;
+  const side = lean < 0 ? q.left : q.right;
+  return lean === 0 ? [] : side.to.map((to) => [to, Math.abs(lean)]);
+}
+
+const MAXIMUM = {};
 QUESTIONS.forEach((q) => {
-  ARCHETYPE_KEYS.forEach((key) => {
-    let best = 0;
-    q.options.forEach((o) => { if (o.w[key]) best = Math.max(best, o.w[key]); });
-    maxes[key] = (maxes[key] || 0) + best;
-  });
+  const ids = q.type === "choice" ? q.options.map((o) => o.to) : q.left.to.concat(q.right.to);
+  ids.forEach((id) => { MAXIMUM[id] = (MAXIMUM[id] || 0) + 2; });
 });
+
+function ranked() {
+  const scored = {};
+  answers.forEach((answer, i) => {
+    pointsFor(QUESTIONS[i], answer).forEach(([to, points]) => { scored[to] = (scored[to] || 0) + points; });
+  });
+  return ARCHETYPES.map((archetype, order) => ({
+    archetype,
+    count: scored[archetype.id] || 0,
+    percent: Math.round(((scored[archetype.id] || 0) / (MAXIMUM[archetype.id] || 1)) * 100),
+    order,
+  })).sort((a, b) => b.percent - a.percent || b.count - a.count || a.order - b.order);
+}
+
+// ── The app code ──
+const ALPHABET = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
+
+function checksum(version, top, next) {
+  let h = 7 + version * 131;
+  [top, next, top + next, top * 16 + next].forEach((part) => { h = (h * 33 + part * 17 + 5) % 4096; });
+  return h;
+}
+
+// Four characters: the type you came out as, the next closest, and a checksum.
+function encodeCode(order) {
+  const t = ARCHETYPES.indexOf(order[0].archetype);
+  const n = ARCHETYPES.indexOf(order[1].archetype);
+  let value = t * 65536 + n * 4096 + checksum(QUIZ.version, t, n);
+  let out = "";
+  for (let i = 0; i < 4; i++) {
+    out = ALPHABET[value % 32] + out;
+    value = Math.floor(value / 32);
+  }
+  return out;
+}
 
 function renderQuestion() {
   const q = QUESTIONS[currentQ];
@@ -844,19 +757,48 @@ function renderQuestion() {
 
   document.getElementById("quiz-progress-fill").style.width = `${(currentQ / total) * 100}%`;
   document.getElementById("quiz-question-num").textContent = `QUESTION ${currentQ + 1} OF ${total}`;
-  document.getElementById("quiz-question").textContent = q.text;
-
   const optionsEl = document.getElementById("quiz-options");
   optionsEl.innerHTML = "";
-  const letters = ["A", "B", "C", "D"];
 
-  q.options.forEach((opt, i) => {
-    const btn = document.createElement("button");
-    btn.className = "quiz-option";
-    btn.innerHTML = `<span class="opt-letter">${letters[i]}</span><span>${opt.t}</span>`;
-    btn.onclick = () => selectOption(opt.w);
-    optionsEl.appendChild(btn);
-  });
+  if (q.type === "scale") {
+    document.getElementById("quiz-question").textContent = "Which is closer to what you believe?";
+    const statements = document.createElement("div");
+    statements.className = "scale-statements";
+    [q.left.text, q.right.text].forEach((text) => {
+      const el = document.createElement("div");
+      el.textContent = text;
+      statements.appendChild(el);
+    });
+    const row = document.createElement("div");
+    row.className = "scale-row";
+    row.setAttribute("role", "radiogroup");
+    SCALE_LABELS.forEach((label, position) => {
+      const btn = document.createElement("button");
+      btn.className = "scale-dot s" + position;
+      btn.setAttribute("aria-label", label);
+      btn.onclick = () => selectOption(position);
+      row.appendChild(btn);
+    });
+    const hint = document.createElement("p");
+    hint.className = "scale-hint";
+    hint.textContent = "Tap nearer the one you agree with more. The middle means neither.";
+    optionsEl.append(statements, row, hint);
+  } else {
+    document.getElementById("quiz-question").textContent = q.text;
+    const letters = ["A", "B", "C", "D"];
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement("button");
+      btn.className = "quiz-option";
+      const letter = document.createElement("span");
+      letter.className = "opt-letter";
+      letter.textContent = letters[i];
+      const label = document.createElement("span");
+      label.textContent = opt.text;
+      btn.append(letter, label);
+      btn.onclick = () => selectOption(i);
+      optionsEl.appendChild(btn);
+    });
+  }
 
   const card = document.getElementById("quiz-card");
   card.style.opacity = "0";
@@ -868,80 +810,54 @@ function renderQuestion() {
   });
 }
 
-function selectOption(weights) {
-  for (const [key, val] of Object.entries(weights)) {
-    totals[key] = (totals[key] || 0) + val;
-  }
+function selectOption(choice) {
+  answers[currentQ] = choice;
   currentQ++;
-  if (currentQ >= QUESTIONS.length) {
-    showResult();
-  } else {
-    renderQuestion();
-  }
-}
-
-function getPercentages() {
-  const pcts = {};
-  for (const key of ARCHETYPE_KEYS) {
-    const total = totals[key] || 0;
-    const max = maxes[key] || 1;
-    pcts[key] = Math.round((total / max) * 100);
-  }
-  return pcts;
-}
-
-function getSorted() {
-  // Highest score wins; ties broken by raw points then key order for determinism.
-  return [...ARCHETYPE_KEYS].sort((a, b) => {
-    const pa = getPercentages()[a], pb = getPercentages()[b];
-    if (pb !== pa) return pb - pa;
-    return (totals[b] || 0) - (totals[a] || 0);
-  });
+  if (currentQ >= QUESTIONS.length) showResult();
+  else renderQuestion();
 }
 
 function showResult() {
   document.getElementById("quiz-card").classList.add("hidden");
   document.getElementById("quiz-progress").classList.add("hidden");
 
-  document.getElementById("quiz-title").textContent = "the verdict is in.";
-  document.getElementById("quiz-subtitle").textContent = "your best friend has reviewed the evidence. here’s the read.";
+  document.getElementById("quiz-title").textContent = "here's the honest version.";
+  document.getElementById("quiz-subtitle").textContent = "Based on what you said you'd actually do.";
 
-  const pcts = getPercentages();
-  const sorted = getSorted();
-  const topKey = sorted[0];
-  const arch = ARCHETYPES[topKey];
+  const order = ranked();
+  const top = order[0].archetype;
 
   const iconEl = document.getElementById("result-emoji");
-  iconEl.textContent = arch.icon;
-  iconEl.className = "result-emoji " + TRAIT_META[topKey].color;
-  document.getElementById("result-archetype").textContent = arch.name;
-  document.getElementById("result-subtitle").textContent = arch.summary;
+  iconEl.textContent = top.icon;
+  iconEl.className = "result-emoji vermillion";
+  document.getElementById("result-archetype").textContent = top.name;
+  document.getElementById("result-subtitle").textContent = top.alias;
 
-  document.getElementById("field-talent").textContent = arch.talent;
-  document.getElementById("field-truth").textContent = arch.truth;
-  document.getElementById("field-coping").textContent = arch.coping;
-  document.getElementById("field-help").textContent = arch.help;
-  document.getElementById("share-phrase").textContent = `“${arch.share}”`;
+  document.getElementById("field-vibe").textContent = top.vibe;
+  document.getElementById("field-truth").textContent = top.truth;
+  document.getElementById("field-hear").textContent = top.hear;
+  document.getElementById("share-phrase").textContent = `“${top.share}”`;
+  document.getElementById("app-code").textContent = encodeCode(order);
+  document.getElementById("field-start").textContent = `${top.focusName}. In the Reframed app, your code sets this up as your suggested focus: one small thing to try each day that goes against the habit.`;
 
-  // Top-5 breakdown bars
+  // The four closest types
   const barsEl = document.getElementById("result-bars");
-  barsEl.innerHTML = "<h3>how your coping actually breaks down</h3>";
-  sorted.slice(0, 5).forEach((key, i) => {
-    const meta = TRAIT_META[key];
-    const pct = pcts[key];
+  barsEl.innerHTML = "<h3>how your answers split</h3>";
+  order.slice(0, 4).forEach((entry, i) => {
     const row = document.createElement("div");
     row.className = "bar-row" + (i === 0 ? " primary" : "");
     row.innerHTML = `
       <div class="bar-label-row">
-        <span class="bar-name">${meta.label}</span>
-        <span class="bar-pct">${pct}%</span>
+        <span class="bar-name"></span>
+        <span class="bar-pct">${entry.percent}%</span>
       </div>
       <div class="bar-track">
-        <div class="bar-fill ${meta.color}"></div>
+        <div class="bar-fill ${COLORS[i]}"></div>
       </div>`;
+    row.querySelector(".bar-name").textContent = entry.archetype.name;
     barsEl.appendChild(row);
     requestAnimationFrame(() => {
-      setTimeout(() => { row.querySelector(".bar-fill").style.width = pct + "%"; }, 120 + i * 110);
+      setTimeout(() => { row.querySelector(".bar-fill").style.width = entry.percent + "%"; }, 120 + i * 110);
     });
   });
 
@@ -951,9 +867,8 @@ function showResult() {
 }
 
 function shareText() {
-  const sorted = getSorted();
-  const arch = ARCHETYPES[sorted[0]];
-  return `my chronically online coping archetype is “${arch.name}.”\n\n${arch.share}\n\nfind yours:`;
+  const top = ranked()[0].archetype;
+  return `the brutally honest quiz says i'm “${top.name}.”\n\n${top.share}\n\nfind yours:`;
 }
 
 function toast(msg) {
@@ -967,9 +882,9 @@ function shareResult() {
   const text = shareText();
   const url = window.location.href;
   if (navigator.share) {
-    navigator.share({ title: "My Coping Archetype", text, url }).catch(() => {});
+    navigator.share({ title: "The Brutally Honest Quiz", text, url }).catch(() => {});
   } else {
-    navigator.clipboard.writeText(`${text} ${url}`).then(() => toast("> copied — paste it anywhere"));
+    navigator.clipboard.writeText(`${text} ${url}`).then(() => toast("> copied. paste it anywhere"));
   }
 }
 
@@ -978,14 +893,18 @@ function copyResult() {
   navigator.clipboard.writeText(`${shareText()} ${url}`).then(() => toast("> copied to clipboard"));
 }
 
+function copyCode() {
+  navigator.clipboard.writeText(document.getElementById("app-code").textContent).then(() => toast("> code copied"));
+}
+
 function retakeQuiz() {
   currentQ = 0;
-  Object.keys(totals).forEach((k) => delete totals[k]);
+  answers = [];
   document.getElementById("quiz-card").classList.remove("hidden");
   document.getElementById("quiz-progress").classList.remove("hidden");
   document.getElementById("result-wrap").classList.add("hidden");
-  document.getElementById("quiz-title").innerHTML = "what's your chronically<br>online coping archetype?";
-  document.getElementById("quiz-subtitle").textContent = "12 unhinged but accurate scenarios, decided by your brutally honest best friend. you will feel seen. you will feel attacked. you will send it to the group chat.";
+  document.getElementById("quiz-title").textContent = "the brutally honest quiz";
+  document.getElementById("quiz-subtitle").textContent = "Ten uncomfortable situations and ten either-ors about what you believe. Pick what you'd actually do, not what you'd like to think you'd do. You'll get the type you're closest to, what's really going on underneath it, and the one thing it needs to hear. It's designed to be uncomfortable: the questions put you under a bit of pressure on purpose, because that's when your habits take over.";
   renderQuestion();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
