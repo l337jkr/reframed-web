@@ -9,12 +9,14 @@ article's HTML. Run after adding or editing an article:
 
 Generates:
   - articles/<slug>.md          Markdown copy of each article (for agents)
+  - blog/<slug>/index.html      Clean redirect stubs for legacy /blog/<slug> URLs
   - llms.txt                    from scripts/llms.template.txt
   - llms-full.txt               every article's Markdown in one file
   - sitemap.xml
   - the article list in articles/index.html (and its JSON-LD)
   - the featured list on index.html
-It also keeps each article's dateModified and Markdown <link> in sync.
+It also keeps each article's dateModified, Markdown <link>, and site-wide
+educational footer disclaimer in sync.
 """
 
 import html
@@ -30,6 +32,11 @@ SITE = "https://behaviorized.net"
 CHECK = "--check" in sys.argv
 changed = []
 
+DISCLAIMER = (
+    "Reframed is a self-guided wellbeing tool inspired by cognitive behavioural techniques. "
+    "It is not a substitute for professional mental healthcare, diagnosis or treatment."
+)
+
 
 def write(path, text):
     path = ROOT / path
@@ -37,7 +44,19 @@ def write(path, text):
     if old != text:
         changed.append(str(path.relative_to(ROOT)))
         if not CHECK:
+            path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(text)
+
+
+def ensure_footer_disclaimer(src):
+    if "footer-disclaimer" in src or '<p class="footer-copy">' not in src:
+        return src
+    return re.sub(
+        r'([ \t]*)(<p class="footer-copy">)',
+        rf'\1<p class="footer-disclaimer">{DISCLAIMER}</p>\n\1\2',
+        src,
+        count=1,
+    )
 
 
 def nice_date(iso):
@@ -204,6 +223,20 @@ def blocks(node, base):
             rest = Node("span", {})
             rest.children = [x for x in c.children if x is not label]
             out.append(f"> **{text_of(label, base) if label else 'Thought'}:** {text_of(rest, base)}")
+        elif "cluster-box" in cls:
+            label = find(c, lambda n: "label" in n.classes)
+            intro = find(c, lambda n: "cluster-intro" in n.classes)
+            list_node = find(c, lambda n: n.tag in ("ul", "ol"))
+            parts = [f"### {text_of(label, base)}" if label else "### Related reading"]
+            if intro:
+                parts.append(text_of(intro, base))
+            if list_node:
+                items = [li for li in list_node.children if isinstance(li, Node) and li.tag == "li"]
+                parts.append("\n".join(
+                    (f"{i}. " if list_node.tag == "ol" else "- ") + text_of(li, base)
+                    for i, li in enumerate(items, 1)
+                ))
+            out.append("\n\n".join(parts))
         elif "stat-row" in cls:
             stats = [s for s in c.children if isinstance(s, Node) and "stat" in s.classes]
             lines = []
@@ -215,10 +248,18 @@ def blocks(node, base):
         elif "support-card" in cls:
             title = find(c, lambda n: "support-card-title" in n.classes)
             desc = find(c, lambda n: "support-card-desc" in n.classes)
-            link = find(c, lambda n: n.tag == "a")
+            actions = find(c, lambda n: "support-card-actions" in n.classes)
             out.append("---")
-            out.append(f"**{text_of(title, base)}** {text_of(desc, base)} "
-                       f"[Download Reframed on the App Store]({link.attrs['href']})")
+            if actions:
+                links = [a for a in actions.children if isinstance(a, Node) and a.tag == "a"]
+                link_md = " · ".join(
+                    f"[{text_of(a, base)}]({absolute(a.attrs.get('href', ''), base)})" for a in links
+                )
+                out.append(f"**{text_of(title, base)}** {text_of(desc, base)} {link_md}")
+            else:
+                link = find(c, lambda n: n.tag == "a")
+                out.append(f"**{text_of(title, base)}** {text_of(desc, base)} "
+                           f"[Download Reframed on the App Store]({link.attrs['href']})")
         elif c.tag in ("script", "style", "svg", "canvas", "nav", "footer"):
             continue
         else:
@@ -253,6 +294,35 @@ def article_markdown(entry, html_text):
     return "\n\n".join(header + blocks(body, url)) + "\n"
 
 
+def redirect_stub(target_path, canonical_url, md_url, title):
+    esc_title = html.escape(title, quote=False)
+    md_link = (
+        f'  <link rel="alternate" type="text/markdown" href="{md_url}" title="Markdown version" />\n'
+        if md_url else ""
+    )
+    md_body = f' (<a href="{md_url}">Markdown version</a>)' if md_url else ""
+    return (
+        "<!DOCTYPE html>\n"
+        '<html lang="en">\n'
+        "<head>\n"
+        '  <meta charset="UTF-8" />\n'
+        f"  <title>{esc_title} — Reframed</title>\n"
+        '  <meta name="robots" content="noindex, follow" />\n'
+        f'  <link rel="canonical" href="{canonical_url}" />\n'
+        f"{md_link}"
+        f'  <meta http-equiv="refresh" content="0; url={target_path}" />\n'
+        "  <script>\n"
+        '    try { sessionStorage.setItem("reframed_redirect_from", location.pathname); } catch (e) {}\n'
+        f'    location.replace("{target_path}" + location.search + location.hash);\n'
+        "  </script>\n"
+        "</head>\n"
+        "<body>\n"
+        f'  <p>Redirecting to <a href="{target_path}">{esc_title}</a>{md_body}.</p>\n'
+        "</body>\n"
+        "</html>\n"
+    )
+
+
 # ── Build ────────────────────────────────────────────────────────────
 
 articles = json.loads((ROOT / "articles/articles.json").read_text())
@@ -266,9 +336,24 @@ for a in articles:
     link = f'<link rel="alternate" type="text/markdown" href="{a["slug"]}.md" title="Markdown version" />'
     if 'type="text/markdown"' not in new:
         new = re.sub(r'(\n([ \t]*)<link rel="canonical"[^\n]*)', rf"\1\n\2{link}", new, count=1)
+    new = ensure_footer_disclaimer(new)
     write(f"articles/{a['slug']}.html", new)
     md[a["slug"]] = article_markdown(a, new)
     write(f"articles/{a['slug']}.md", md[a["slug"]])
+
+    for legacy in a.get("legacyPaths", []):
+        legacy_clean = legacy.strip("/")
+        target_rel = f"/articles/{a['slug']}.html"
+        canonical = f"{SITE}{target_rel}"
+        md_abs = f"{SITE}/articles/{a['slug']}.md"
+        stub = redirect_stub(target_rel, canonical, md_abs, a.get("seoTitle") or a["title"])
+        write(f"{legacy_clean}/index.html", stub)
+
+# /blog/ index redirect to /articles/
+write(
+    "blog/index.html",
+    redirect_stub("/articles/", f"{SITE}/articles/", f"{SITE}/llms.txt", "Articles"),
+)
 
 
 def listing(entries, indent, prefix, excerpt_key):
@@ -329,13 +414,20 @@ ld = json.dumps(jsonld, indent=2, ensure_ascii=False).replace("\n", "\n  ")
 idx = replace_region(
     idx, "jsonld", f'  <script type="application/ld+json">\n  {ld}\n  </script>', idx_path
 )
+idx = ensure_footer_disclaimer(idx)
 write(idx_path, idx)
 
-# index.html — featured list
+# index.html — featured list + footer disclaimer
 home = (ROOT / "index.html").read_text()
 featured = [a for a in articles if a.get("featured")]
 home = replace_region(home, "featured", listing(featured, 6, "articles/", "homeExcerpt"), "index.html")
+home = ensure_footer_disclaimer(home)
 write("index.html", home)
+
+# Ensure footer disclaimer across other top-level static pages
+for page_name in ("quiz.html", "self-aware.html", "privacy.html", "terms.html", "support.html", "changelog.html"):
+    page_src = (ROOT / page_name).read_text()
+    write(page_name, ensure_footer_disclaimer(page_src))
 
 # sitemap.xml
 STATIC_TOP = [("", "monthly", "1.0"), ("articles/", "weekly", "0.9")]
@@ -384,9 +476,9 @@ write("llms.txt", template.replace("{{ARTICLES}}", "\n".join(lines)))
 full_head = (
     "# Reframed: full article text\n\n"
     "> Every article on behaviorized.net in Markdown, newest first. Written by Hexp Studios, "
-    "publisher of Reframed, an iOS app for daily CBT practice. Self-help drawn from CBT, not therapy "
-    "or medical advice; each article ends with a note on limits. Index: "
-    f"{SITE}/llms.txt\n"
+    "publisher of Reframed, an iOS wellbeing tool inspired by cognitive behavioural techniques "
+    "(not a substitute for professional mental healthcare, diagnosis or treatment; each article "
+    f"ends with a note on limits). Index: {SITE}/llms.txt\n"
 )
 write("llms-full.txt", full_head + "".join("\n---\n\n" + md[a["slug"]] for a in articles))
 

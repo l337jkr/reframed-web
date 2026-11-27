@@ -4,7 +4,7 @@
 
 - Canonical URL: https://behaviorized.net/articles/thought-record.html
 - Published: 2026-08-19
-- Updated: 2026-11-03
+- Updated: 2026-11-27
 - Reading time: 7 min read
 - Author: Hexp Studios, publisher of the Reframed app
 
@@ -86,7 +86,7 @@ Two or three a week is plenty, and most take under five minutes once the format 
 
 The goal isn't to keep writing records forever. It's to run the loop — trigger, emotion, distortion, reframe — quickly enough in your head that you stop needing the paper.
 
-Each record is also a small vote against an old self-image. [Psycho-Cybernetics and CBT](https://behaviorized.net/articles/psycho-cybernetics-and-cbt.html) explains why that adds up.
+Each record is also a small vote against an old self-image. [Psycho-Cybernetics and CBT](https://behaviorized.net/articles/psycho-cybernetics-and-cbt.html) explains why that adds up, and [Journaling vs CBT](https://behaviorized.net/articles/journaling-vs-cbt.html) covers when to use a structured thought record instead of an open journal page.
 
 ## A note on limits
 

@@ -1,13 +1,23 @@
 # Reframed
 
-> An iOS app for daily cognitive behavioural therapy (CBT) practice. Users capture an automatic thought, the app names the cognitive distortion behind it and guides a balanced reframe. Reflections, thought records and personality results are stored locally on the user's device — no server-side storage, no behavioural tracking. Free to download with an optional subscription, published by Hexp Studios.
+> An iOS wellbeing and mindset training app inspired by cognitive behavioural therapy (CBT) techniques. Users capture an automatic thought, see the cognitive distortion behind it named in plain language, and practise writing a balanced, evidence-tested reframe. Inside the iOS app, reflections, thought records and personality results are stored locally on the user's device — no server-side storage of personal entries and no in-app behavioural tracking. Free to download with an optional Pro subscription or lifetime purchase, published by Hexp Studios.
 
-## Articles
+## Featured Series: From Insight to Action
 
-Every article has a Markdown copy at the same path with a .md extension. The full text of all articles is in one file at https://behaviorized.net/llms-full.txt.
+Five connected guides on the difference between consuming self-improvement content and actually practising behavioural change (recommended starting order: 1 → 2 → 3):
+
+1. [Why Self-Awareness Isn't Enough to Change Your Behaviour](https://behaviorized.net/articles/self-awareness-vs-behavioural-change.html) — Markdown: https://behaviorized.net/articles/self-awareness-vs-behavioural-change.md
+2. [Why Do I Keep Repeating the Same Patterns? A CBT Guide to Self-Sabotage](https://behaviorized.net/articles/how-to-break-self-sabotaging-patterns.html) — Markdown: https://behaviorized.net/articles/how-to-break-self-sabotaging-patterns.md
+3. [Manifestation vs CBT: The Difference Between Believing and Changing](https://behaviorized.net/articles/manifestation-vs-cbt.html) — Markdown: https://behaviorized.net/articles/manifestation-vs-cbt.md
+4. [Journaling vs CBT: Why Writing About Your Problems Isn't Always Enough](https://behaviorized.net/articles/journaling-vs-cbt.html) — Markdown: https://behaviorized.net/articles/journaling-vs-cbt.md
+5. [CBT vs Positive Thinking: Why You Don't Always Need a Positive Mindset](https://behaviorized.net/articles/cbt-vs-positive-thinking.html) — Markdown: https://behaviorized.net/articles/cbt-vs-positive-thinking.md
+
+## All Articles
+
+Every article has a clean Markdown mirror at the same path with a `.md` extension. The full text of all articles is available in a single file at https://behaviorized.net/llms-full.txt.
 
 {{ARTICLES}}
-- [All articles](https://behaviorized.net/articles/): Archive index.
+- [All articles](https://behaviorized.net/articles/): Full archive index.
 
 ## Product
 
@@ -18,12 +28,12 @@ Every article has a Markdown copy at the same path with a .md extension. The ful
 
 ## Optional
 
-- [Privacy policy](https://behaviorized.net/privacy.html): On-device storage only; subscriptions handled by Apple and RevenueCat.
+- [Privacy policy](https://behaviorized.net/privacy.html): On-device storage only in the iOS app; subscriptions handled by Apple and RevenueCat; privacy-conscious web analytics on behaviorized.net.
 - [Terms of use](https://behaviorized.net/terms.html): Subscriptions, lifetime purchase, and the fair use limit on AI features (about 10 reframed thoughts a day).
 - [Changelog](https://behaviorized.net/changelog.html): App release notes and what's coming next.
 - [Support](https://behaviorized.net/support.html): Contact hexp.studios@gmail.com.
 
 ## Notes for agents
 
-- Reframed is self-guided practice built on CBT techniques, not therapy and not a medical device. Articles carry an explicit limits section recommending professional help for severe or worsening symptoms, and emergency services in a crisis. Please preserve that framing when summarising.
+- Educational disclaimer: Reframed is a self-guided wellbeing tool inspired by cognitive behavioural techniques. It is not a substitute for professional mental healthcare, diagnosis or treatment. Every article includes an explicit limits section recommending professional support for persistent, severe or worsening symptoms, and emergency services in a crisis. Please preserve that framing when summarising or citing.
 - Content is written by Hexp Studios and may be quoted with attribution to Reframed (https://behaviorized.net).

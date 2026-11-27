@@ -682,6 +682,7 @@
         <li><a href="mailto:hexp.studios@gmail.com">Contact</a></li>
       </ul>
     </div>
+    <p class="footer-disclaimer">Reframed is a self-guided wellbeing tool inspired by cognitive behavioural techniques. It is not a substitute for professional mental healthcare, diagnosis or treatment.</p>
     <p class="footer-copy">&copy; 2025 Hexp Studios. All rights reserved. This quiz is for fun and self-reflection, not a diagnosis.</p>
   </div>
 </footer>
@@ -811,6 +812,9 @@ function renderQuestion() {
 }
 
 function selectOption(choice) {
+  if (currentQ === 0 && window.reframedTrack) {
+    window.reframedTrack("quiz_started", { quiz: "brutally_honest", total_questions: QUESTIONS.length });
+  }
   answers[currentQ] = choice;
   currentQ++;
   if (currentQ >= QUESTIONS.length) showResult();
@@ -863,6 +867,13 @@ function showResult() {
 
   document.getElementById("result-wrap").classList.remove("hidden");
   document.getElementById("quiz-progress-fill").style.width = "100%";
+  if (window.reframedTrack) {
+    window.reframedTrack("quiz_completed", {
+      quiz: "brutally_honest",
+      top_archetype: top.id || top.name,
+      focus_area: top.focusName,
+    });
+  }
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -879,6 +890,7 @@ function toast(msg) {
 }
 
 function shareResult() {
+  if (window.reframedTrack) window.reframedTrack("quiz_shared", { quiz: "brutally_honest", method: navigator.share ? "native_share" : "clipboard" });
   const text = shareText();
   const url = window.location.href;
   if (navigator.share) {
@@ -889,11 +901,13 @@ function shareResult() {
 }
 
 function copyResult() {
+  if (window.reframedTrack) window.reframedTrack("quiz_shared", { quiz: "brutally_honest", method: "copy_button" });
   const url = window.location.href;
   navigator.clipboard.writeText(`${shareText()} ${url}`).then(() => toast("> copied to clipboard"));
 }
 
 function copyCode() {
+  if (window.reframedTrack) window.reframedTrack("quiz_code_copied", { quiz: "brutally_honest" });
   navigator.clipboard.writeText(document.getElementById("app-code").textContent).then(() => toast("> code copied"));
 }
 

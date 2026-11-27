@@ -4,7 +4,7 @@
 
 - Canonical URL: https://behaviorized.net/articles/affirmations-vs-reframing.html
 - Published: 2026-08-19
-- Updated: 2026-11-03
+- Updated: 2026-11-27
 - Reading time: 6 min read
 - Author: Hexp Studios, publisher of the Reframed app
 
@@ -71,7 +71,7 @@ Two other things make affirmations land better, both supported by the research:
 
 Repetition isn't the mechanism. Evidence is. Repetition just makes the verdict stick once you've won the case.
 
-If you came to this through mindset books, [Psycho-Cybernetics and CBT](https://behaviorized.net/articles/psycho-cybernetics-and-cbt.html) covers how the self-image idea fits with this method.
+If you came to this through mindset books, [Psycho-Cybernetics and CBT](https://behaviorized.net/articles/psycho-cybernetics-and-cbt.html) covers how the self-image idea fits with this method, [Manifestation vs CBT](https://behaviorized.net/articles/manifestation-vs-cbt.html) looks at why ungrounded future fantasies sap action, and [CBT vs positive thinking](https://behaviorized.net/articles/cbt-vs-positive-thinking.html) explains why accuracy beats forced optimism.
 
 ## A note on limits
 

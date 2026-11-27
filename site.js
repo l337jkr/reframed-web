@@ -461,3 +461,257 @@
   if (reduced) { dotAngle = ang(THOUGHT); }
   update();
 })();
+
+// Web analytics & conversion funnels (PostHog) — privacy-conscious, website-only.
+(function () {
+  const POSTHOG_PROJECT_KEY = "phc_A5YwXFx7y2meb2VhefKbsYpkeTStRrJMXEz7zfrWAdvt";
+  const POSTHOG_API_HOST = "https://us.i.posthog.com";
+
+  const metaKey = document.querySelector('meta[name="posthog-key"]');
+  const metaHost = document.querySelector('meta[name="posthog-host"]');
+  const apiKey = (window.REFRAMED_POSTHOG_KEY || (metaKey && metaKey.content) || POSTHOG_PROJECT_KEY || "").trim();
+  const apiHost = (window.REFRAMED_POSTHOG_HOST || (metaHost && metaHost.content) || POSTHOG_API_HOST).replace(/\/+$/, "");
+
+  const params = new URLSearchParams(window.location.search);
+  const debugMode = params.get("debug_analytics") === "1" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+  const dntEnabled = navigator.doNotTrack === "1" || window.doNotTrack === "1" || navigator.globalPrivacyControl === true;
+
+  const INSIGHT_CLUSTER = new Set([
+    "self-awareness-vs-behavioural-change",
+    "how-to-break-self-sabotaging-patterns",
+    "manifestation-vs-cbt",
+    "journaling-vs-cbt",
+    "cbt-vs-positive-thinking",
+  ]);
+
+  const AI_SOURCES = [
+    ["chatgpt", /chatgpt\.com|chat\.openai\.com/i],
+    ["perplexity", /perplexity\.ai/i],
+    ["claude", /claude\.ai|anthropic\.com/i],
+    ["gemini", /gemini\.google\.com|bard\.google\.com/i],
+    ["copilot", /copilot\.microsoft\.com|bing\.com\/chat/i],
+    ["grok", /grok\.com|x\.ai/i],
+    ["you", /(^|\.)you\.com/i],
+    ["phind", /phind\.com/i],
+    ["poe", /poe\.com/i],
+    ["deepseek", /deepseek\.com/i],
+    ["meta_ai", /meta\.ai/i],
+  ];
+
+  const SEARCH_ENGINES = /google\.|bing\.com|duckduckgo\.com|search\.brave\.com|ecosia\.org|yahoo\.com|kagi\.com/i;
+  const SOCIAL_SITES = /t\.co|twitter\.com|x\.com|instagram\.com|tiktok\.com|reddit\.com|threads\.net|linkedin\.com|facebook\.com|youtube\.com/i;
+
+  function classifyTraffic() {
+    const ref = document.referrer || "";
+    const utmSource = (params.get("utm_source") || params.get("ref") || "").toLowerCase();
+    const combined = `${ref} ${utmSource}`;
+
+    for (const [name, rx] of AI_SOURCES) {
+      if (rx.test(combined)) return { traffic_channel: "ai_assistant", ai_source: name };
+    }
+    if (ref) {
+      try {
+        const refHost = new URL(ref).hostname;
+        if (refHost === window.location.hostname || refHost.endsWith("behaviorized.net")) {
+          return { traffic_channel: "internal", ai_source: null };
+        }
+        if (SEARCH_ENGINES.test(refHost)) return { traffic_channel: "organic_search", ai_source: null };
+        if (SOCIAL_SITES.test(refHost)) return { traffic_channel: "social", ai_source: null };
+        return { traffic_channel: "referral", ai_source: null };
+      } catch (_) {
+        return { traffic_channel: "referral", ai_source: null };
+      }
+    }
+    if (utmSource) return { traffic_channel: "campaign", ai_source: null };
+    return { traffic_channel: "direct", ai_source: null };
+  }
+
+  let redirectedFrom = null;
+  try {
+    redirectedFrom = sessionStorage.getItem("reframed_redirect_from");
+    if (redirectedFrom) sessionStorage.removeItem("reframed_redirect_from");
+  } catch (_) {}
+
+  const attribution = classifyTraffic();
+  const baseProps = {
+    page_path: window.location.pathname,
+    traffic_channel: attribution.traffic_channel,
+    ai_source: attribution.ai_source,
+    redirected_from: redirectedFrom,
+  };
+
+  const queue = [];
+  window.__reframedEvents = queue;
+  let sdkReady = false;
+
+  function emit(eventName, props, options) {
+    if (dntEnabled && !debugMode) return;
+    const payload = Object.assign({}, baseProps, props || {});
+    queue.push({ event: eventName, properties: payload, timestamp: new Date().toISOString() });
+    if (debugMode && window.console && console.debug) {
+      console.debug("[reframed-analytics]", eventName, payload);
+    }
+    if (sdkReady && window.posthog && typeof window.posthog.capture === "function") {
+      window.posthog.capture(eventName, payload, options);
+    }
+  }
+
+  window.reframedTrack = emit;
+
+  if (apiKey && apiKey.startsWith("phc_") && !dntEnabled) {
+    const assetHost = apiHost.includes(".i.posthog.com")
+      ? apiHost.replace(".i.posthog.com", "-assets.i.posthog.com")
+      : apiHost;
+    const script = document.createElement("script");
+    script.async = true;
+    script.crossOrigin = "anonymous";
+    script.src = `${assetHost}/static/array.js`;
+    script.onload = function () {
+      if (!window.posthog || typeof window.posthog.init !== "function") return;
+      window.posthog.init(apiKey, {
+        api_host: apiHost,
+        person_profiles: "identified_only",
+        capture_pageview: true,
+        capture_pageleave: true,
+        autocapture: false,
+        disable_session_recording: true,
+        loaded: function (ph) {
+          sdkReady = true;
+          ph.register({
+            site_section: window.location.pathname.startsWith("/articles/") ? "articles" : "marketing",
+            initial_traffic_channel: attribution.traffic_channel,
+          });
+          if (attribution.ai_source) {
+            ph.register_once({ first_ai_source: attribution.ai_source });
+          }
+          for (const item of queue) {
+            ph.capture(item.event, item.properties);
+          }
+        },
+      });
+    };
+    document.head.appendChild(script);
+  }
+
+  if (attribution.traffic_channel === "ai_assistant") {
+    emit("ai_referral_landed", {
+      referrer: document.referrer || null,
+      utm_source: params.get("utm_source") || null,
+    });
+  }
+
+  // Article reading metrics & scroll milestones
+  const articleEl = document.querySelector("article.prose");
+  const slugMatch = window.location.pathname.match(/\/articles\/([^/]+)\.html$/);
+  const articleSlug = slugMatch ? slugMatch[1] : null;
+
+  if (articleEl && articleSlug) {
+    const words = (articleEl.innerText || "").trim().split(/\s+/).filter(Boolean).length;
+    const inCluster = INSIGHT_CLUSTER.has(articleSlug);
+    emit("article_viewed", {
+      article_slug: articleSlug,
+      article_title: document.title.replace(/\s+[—|]\s+Reframed$/, ""),
+      in_insight_cluster: inCluster,
+      word_count: words,
+    });
+
+    const openedAt = Date.now();
+    const hit50 = { done: false }, hit90 = { done: false };
+    let scrollTick = false;
+
+    function checkReadDepth() {
+      const rect = articleEl.getBoundingClientRect();
+      const total = Math.max(1, articleEl.offsetHeight);
+      const seen = window.innerHeight - rect.top;
+      const ratio = seen / total;
+      const engagedSec = Math.round((Date.now() - openedAt) / 1000);
+
+      if (!hit50.done && ratio >= 0.5 && engagedSec >= 8) {
+        hit50.done = true;
+        emit("article_read_milestone", {
+          article_slug: articleSlug,
+          in_insight_cluster: inCluster,
+          depth_percent: 50,
+          engaged_seconds: engagedSec,
+        });
+      }
+      if (!hit90.done && ratio >= 0.9 && engagedSec >= 20) {
+        hit90.done = true;
+        emit("article_read_milestone", {
+          article_slug: articleSlug,
+          in_insight_cluster: inCluster,
+          depth_percent: 90,
+          engaged_seconds: engagedSec,
+        });
+      }
+    }
+
+    window.addEventListener("scroll", function () {
+      if (scrollTick || (hit50.done && hit90.done)) return;
+      scrollTick = true;
+      requestAnimationFrame(function () {
+        scrollTick = false;
+        checkReadDepth();
+      });
+    }, { passive: true });
+  }
+
+  // Delegated click tracking for App Store CTAs, quizzes, cluster navigation, and scientific citations
+  document.addEventListener("click", function (ev) {
+    const link = ev.target && ev.target.closest ? ev.target.closest("a[href]") : null;
+    if (!link) return;
+    const href = link.getAttribute("href") || "";
+
+    if (href.includes("apps.apple.com")) {
+      const inHero = Boolean(link.closest(".hero"));
+      const inSupportCard = Boolean(link.closest(".support-card"));
+      const placement = link.getAttribute("data-track") || (inHero ? "hero" : inSupportCard ? "article_support_card" : "inline");
+      emit("appstore_cta_clicked", {
+        placement: placement,
+        cta_label: (link.textContent || "").trim(),
+        article_slug: articleSlug,
+      }, { transport: "sendBeacon" });
+      return;
+    }
+
+    if (/(^|\/)(quiz|self-aware)\.html($|[?#])/.test(href)) {
+      const targetQuiz = href.includes("self-aware") ? "self_awareness" : "brutally_honest";
+      const placement = link.getAttribute("data-track") || (link.closest("nav") ? "nav" : link.closest(".support-card") ? "article_support_card" : "inline");
+      emit("quiz_cta_clicked", {
+        target_quiz: targetQuiz,
+        placement: placement,
+        article_slug: articleSlug,
+      }, { transport: "sendBeacon" });
+      return;
+    }
+
+    if (link.closest(".cluster-box")) {
+      const toMatch = href.match(/([^/]+)\.html/);
+      emit("article_cluster_clicked", {
+        from_slug: articleSlug || "articles_index",
+        to_slug: toMatch ? toMatch[1] : href,
+        placement: "cluster_box",
+      });
+      return;
+    }
+
+    if (articleSlug && link.closest("article.prose")) {
+      if (link.closest("ul.sources")) {
+        let host = null;
+        try { host = new URL(link.href).hostname; } catch (_) {}
+        emit("article_reference_clicked", {
+          article_slug: articleSlug,
+          target_host: host,
+          target_url: link.href,
+        }, { transport: "sendBeacon" });
+      } else if (/\.html($|#)/.test(href) && !/^https?:\/\//i.test(href)) {
+        const toMatch = href.match(/([^/]+)\.html/);
+        emit("article_cluster_clicked", {
+          from_slug: articleSlug,
+          to_slug: toMatch ? toMatch[1] : href,
+          placement: "inline_prose",
+        });
+      }
+    }
+  });
+})();

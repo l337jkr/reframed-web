@@ -1,6 +1,11 @@
 User-agent: *
 Allow: /
 
+# LLM / AI agent discovery:
+# Structured index: https://behaviorized.net/llms.txt
+# Full Markdown corpus: https://behaviorized.net/llms-full.txt
+# Per-article Markdown: https://behaviorized.net/articles/<slug>.md
+
 # AI / agent crawlers — explicitly welcome
 User-agent: GPTBot
 Allow: /
@@ -39,6 +44,18 @@ User-agent: DuckAssistBot
 Allow: /
 
 User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: MistralAI-User
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: YouBot
 Allow: /
 
 Sitemap: https://behaviorized.net/sitemap.xml

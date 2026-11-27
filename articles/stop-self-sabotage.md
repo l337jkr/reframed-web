@@ -4,7 +4,7 @@
 
 - Canonical URL: https://behaviorized.net/articles/stop-self-sabotage.html
 - Published: 2026-11-02
-- Updated: 2026-11-20
+- Updated: 2026-11-27
 - Reading time: 8 min read
 - Author: Hexp Studios, publisher of the Reframed app
 
@@ -115,7 +115,7 @@ Your sabotage log already tells you the "if". Fill in the "then":
 - *If* I feel the urge to go cold after a good date, *then* I'll send one ordinary message instead of disappearing.
 - *If* I miss a day of a habit, *then* the rule is "never miss two", not "start over Monday".
 
-Keep the "then" small. The aim isn't to force a breakthrough. It's to do the avoided thing in a version small enough that you'll actually do it, and then notice what happens. Usually the feared outcome is smaller than predicted, or doesn't arrive at all, and that's real evidence against the old rule. CBT calls this a behavioural experiment, and it's how beliefs change: not by being argued with, but by being tested. For how to run these steps live on your phone without getting tripped up by streaks, see [how to use a CBT app to stop self-sabotaging](https://behaviorized.net/articles/stop-self-sabotage-with-cbt-apps.html).
+Keep the "then" small. The aim isn't to force a breakthrough. It's to do the avoided thing in a version small enough that you'll actually do it, and then notice what happens. Usually the feared outcome is smaller than predicted, or doesn't arrive at all, and that's real evidence against the old rule. CBT calls this a behavioural experiment, and it's how beliefs change: not by being argued with, but by being tested. For the hidden short-term rewards across people-pleasing, perfectionism and withdrawal, read [why we keep repeating the same patterns](https://behaviorized.net/articles/how-to-break-self-sabotaging-patterns.html), and for how to run these steps live on your phone without getting tripped up by streaks, see [how to use a CBT app to stop self-sabotaging](https://behaviorized.net/articles/stop-self-sabotage-with-cbt-apps.html).
 
 ## Questions people ask
 
